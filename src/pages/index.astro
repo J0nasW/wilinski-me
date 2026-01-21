@@ -1,4 +1,13 @@
 ---
-// Root index redirects to the default language
-return Astro.redirect('/en/');
+// Root redirect is handled by nginx in production
+// This is a fallback for development
 ---
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="refresh" content="0;url=/en/">
+    <link rel="canonical" href="/en/">
+</head>
+<body></body>
+</html>
