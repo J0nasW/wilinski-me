@@ -1,46 +1,78 @@
-# Astro Starter Kit: Basics
+# wilinski.me
 
-```sh
-npm create astro@latest -- --template basics
+Personal portfolio website for Jonas Wilinski - Researcher, Developer & Founder.
+
+## Tech Stack
+
+- **Framework:** [Astro 5](https://astro.build/) (Static Site Generation)
+- **Styling:** [Tailwind CSS v4](https://tailwindcss.com/)
+- **Internationalization:** English & German (prefix-based routing)
+- **Math Rendering:** KaTeX via remark-math & rehype-katex
+- **Deployment:** Docker + nginx (optimized for Coolify)
+
+## Project Structure
+
 ```
-
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
 /
 ├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
+│   ├── assets/img/       # Images and logos
+│   └── assets/pdf/       # Publication PDFs
+├── src/
+│   ├── components/       # Astro components
+│   │   ├── layout/       # Navigation, Menu
+│   │   ├── sections/     # Hero, CTA, Featured
+│   │   └── ui/           # Badge, Button, ImageLabel
+│   ├── content/
+│   │   ├── blog/en/      # English blog posts
+│   │   └── publications/ # Research publications
+│   ├── i18n/             # Translations (en.json, de.json)
+│   ├── layouts/          # Page layouts
+│   └── pages/
+│       └── [lang]/       # Localized pages (en/de)
+├── Dockerfile            # Production build config
 └── package.json
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+## Development
 
-## 🧞 Commands
+```bash
+# Install dependencies
+npm install
 
-All commands are run from the root of the project, from a terminal:
+# Start dev server (localhost:4321)
+npm run dev
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+# Build for production
+npm run build
 
-## 👀 Want to learn more?
+# Preview production build
+npm run preview
+```
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## Deployment
+
+The project includes a Dockerfile for containerized deployment:
+
+```bash
+# Build Docker image
+docker build -t wilinski-me .
+
+# Run container
+docker run -p 80:80 wilinski-me
+```
+
+For Coolify: Connect your GitHub repository and Coolify will auto-detect the Dockerfile.
+
+## Pages
+
+- `/` - Redirects to `/en/`
+- `/en/` or `/de/` - Homepage
+- `/en/blog/` or `/de/blog/` - Blog listing
+- `/en/publications/` - Research publications
+- `/en/cv/` - Professional experience
+- `/en/contact/` - Contact information
+- `/en/impressum/` - Legal notice
+
+## License
+
+All rights reserved.
