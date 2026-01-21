@@ -1,0 +1,1343 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Footer from "../../components/Footer.astro";
+import Badge from "../../components/ui/Badge.astro";
+import Button from "../../components/ui/Button.astro";
+import { languages, useTranslations, type Lang } from "../../i18n/index";
+
+export function getStaticPaths() {
+    return Object.keys(languages).map((lang) => ({
+        params: { lang },
+    }));
+}
+
+const { lang } = Astro.params as { lang: Lang };
+const t = useTranslations(lang);
+
+// =============================================================================
+// LOGO CONFIGURATION
+// =============================================================================
+// To use a custom image instead of unavatar, replace the URL with a local path:
+//   Example: "/images/cv/porsche.jpg" or import an image
+// To use unavatar, use the format: "https://unavatar.io/domain.com"
+// =============================================================================
+const logos = {
+    // Work Experience
+    reforge: "https://unavatar.io/reforgelabs.com",
+    cargofaces: "/public/assets/img/cargofaces.png",
+    ecomap: "/public/assets/img/ecomap_pin_500px.png",
+    tuhh: "https://unavatar.io/tuhh.de",
+    porsche: "https://unavatar.io/porsche.com",
+    uniKiel: "/public/assets/img/cau.png",
+
+    // Education
+    gymnasium: "/public/assets/img/steingy.jpg",
+
+    // Internships
+    filipp: "/public/assets/img/hf_logo_lq.jpg",
+};
+---
+
+<Layout title={`${t("cv.title")} - Jonas Wilinski`} lang={lang}>
+    <main class="pt-24 pb-16">
+        <!-- Header -->
+        <section class="px-6 md:px-8 mb-12 md:mb-16">
+            <div class="max-w-4xl mx-auto">
+                <div data-reveal>
+                    <span
+                        class="text-xs font-bold uppercase tracking-wider text-accent mb-2 block"
+                    >
+                        {t("cv.label")}
+                    </span>
+                    <h1
+                        class="font-display font-bold text-4xl md:text-5xl lg:text-6xl text-neutral-900 dark:text-white mb-4"
+                    >
+                        {t("cv.title")}
+                    </h1>
+                    <p
+                        class="text-lg text-neutral-600 dark:text-neutral-400 max-w-2xl"
+                    >
+                        {t("cv.description")}
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Two Feature Cards -->
+        <section class="px-6 md:px-8 mb-16">
+            <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-6">
+                <!-- PhD Candidate Card -->
+                <div data-reveal style="--stagger-index: 0;">
+                    <div
+                        class="relative h-full p-8 rounded-3xl bg-gradient-to-br from-violet-950 via-purple-900 to-indigo-900 overflow-hidden"
+                    >
+                        <!-- Decorative Elements -->
+                        <div
+                            class="absolute -top-12 -right-12 w-64 h-64 bg-violet-500 rounded-full blur-[100px] opacity-30 animate-gradient-drift"
+                        >
+                        </div>
+                        <div
+                            class="absolute -bottom-8 -left-8 w-48 h-48 bg-indigo-400 rounded-full blur-[80px] opacity-20 animate-gradient-drift-alt"
+                        >
+                        </div>
+                        <!-- Grid Pattern -->
+                        <div class="absolute inset-0 bg-grid opacity-10"></div>
+
+                        <div class="relative z-10 h-full flex flex-col">
+                            <Badge variant="accent" size="sm" class="mb-4 self-start">
+                                PhD Candidate
+                            </Badge>
+                            <h2
+                                class="font-display font-bold text-xl md:text-2xl text-white mb-3"
+                            >
+                                Institute of Entrepreneurship
+                            </h2>
+                            <p class="text-violet-200 mb-4 text-sm">
+                                Hamburg University of Technology (TUHH)
+                            </p>
+                            <p class="text-violet-100/80 text-sm flex-1">
+                                Researching the diffusion of AI concepts across
+                                the global scientific landscape using NLP and
+                                LLMs.
+                            </p>
+                            <Button
+                                href="https://www.startupengineer.io/"
+                                variant="secondary"
+                                size="sm"
+                                external
+                                class="bg-violet-100/10 hover:bg-violet-100/20 text-violet-100 border-violet-400/30 mt-4"
+                            >
+                                {t("cv.visitInstitute")}
+                                <svg
+                                    class="w-4 h-4"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                </svg>
+                            </Button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reforge Labs Card -->
+                <div data-reveal style="--stagger-index: 1;">
+                    <div
+                        class="relative h-full p-8 rounded-3xl bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-800 overflow-hidden"
+                    >
+                        <!-- Decorative Elements -->
+                        <div
+                            class="absolute -top-12 -right-12 w-64 h-64 bg-accent rounded-full blur-[100px] opacity-25 animate-gradient-drift"
+                        >
+                        </div>
+                        <div
+                            class="absolute -bottom-8 -left-8 w-48 h-48 bg-cyan-500 rounded-full blur-[80px] opacity-15 animate-gradient-drift-alt"
+                        >
+                        </div>
+                        <!-- Dots Pattern -->
+                        <div class="absolute inset-0 bg-dots opacity-20"></div>
+
+                        <div class="relative z-10 h-full flex flex-col">
+                            <Badge variant="accent" size="sm" class="mb-4 self-start">
+                                {t("cv.currentlyBuilding")}
+                            </Badge>
+                            <h2
+                                class="font-display font-bold text-xl md:text-2xl text-white mb-3"
+                            >
+                                Reforge Labs
+                            </h2>
+                            <p class="text-neutral-300 text-sm flex-1">
+                                {t("cv.reforgeDescription")}
+                            </p>
+                            <Button
+                                href="https://reforgelabs.com"
+                                variant="secondary"
+                                size="sm"
+                                external
+                                class="mt-4"
+                            >
+                                {t("cv.visitReforge")}
+                                <svg
+                                    class="w-4 h-4"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                </svg>
+                            </Button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Awards Section
+        <section class="px-6 md:px-8 mb-16">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="font-display font-bold text-2xl text-neutral-900 dark:text-white mb-8 flex items-center gap-3" data-reveal>
+                    <span class="flex items-center justify-center w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-900/30">
+                        <svg class="w-5 h-5 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                        </svg>
+                    </span>
+                    {t('cv.awards')}
+                </h2>
+
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="p-6 rounded-2xl bg-amber-50 dark:bg-amber-900/10 border border-amber-200 dark:border-amber-800/30" data-reveal style="--stagger-index: 0;">
+                        <div class="text-sm font-bold text-amber-600 dark:text-amber-400 mb-2">2013</div>
+                        <h3 class="font-display font-bold text-lg text-neutral-900 dark:text-white mb-2">
+                            Jugend Forscht (2nd Place)
+                        </h3>
+                        <p class="text-sm text-neutral-600 dark:text-neutral-400">
+                            Project "SteinGy Stratos": Weather balloon analysis for optimal photovoltaic usage. Also awarded 3rd place at Einstein OWL.
+                        </p>
+                    </div>
+
+                    <div class="p-6 rounded-2xl bg-amber-50 dark:bg-amber-900/10 border border-amber-200 dark:border-amber-800/30" data-reveal style="--stagger-index: 1;">
+                        <div class="text-sm font-bold text-amber-600 dark:text-amber-400 mb-2">2012</div>
+                        <h3 class="font-display font-bold text-lg text-neutral-900 dark:text-white mb-2">
+                            Jugend Forscht (3rd Place)
+                        </h3>
+                        <p class="text-sm text-neutral-600 dark:text-neutral-400">
+                            Project "Surface cleaning through plasma". Awarded 3rd place and Environmental Special Prize.
+                        </p>
+                    </div>
+
+                    <div class="p-6 rounded-2xl bg-accent/5 dark:bg-accent/10 border border-accent/20" data-reveal style="--stagger-index: 2;">
+                        <div class="text-sm font-bold text-accent mb-2">2014</div>
+                        <h3 class="font-display font-bold text-lg text-neutral-900 dark:text-white mb-2">
+                            German Climate Prize
+                        </h3>
+                        <p class="text-sm text-neutral-600 dark:text-neutral-400">
+                            Significant contribution to the German Climate Prize of the Allianz Environmental Foundation (One of 5 winning schools).
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section> -->
+
+        <!-- Work Experience -->
+        <section class="px-6 md:px-8 mb-16">
+            <div class="max-w-4xl mx-auto">
+                <h2
+                    class="font-display font-bold text-2xl text-neutral-900 dark:text-white mb-8 flex items-center gap-3"
+                    data-reveal
+                >
+                    <span
+                        class="flex items-center justify-center w-10 h-10 rounded-full bg-accent/10"
+                    >
+                        <svg
+                            class="w-5 h-5 text-accent"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                            ></path>
+                        </svg>
+                    </span>
+                    {t("cv.workExperience")}
+                </h2>
+
+                <div
+                    class="relative border-l-2 border-neutral-200 dark:border-neutral-700 ml-5 space-y-8"
+                >
+                    <!-- Researcher at Institute of Entrepreneurship -->
+                    <div
+                        class="relative pl-8"
+                        data-reveal
+                        style="--stagger-index: 0;"
+                    >
+                        <div
+                            class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-accent border-4 border-white dark:border-neutral-900"
+                        >
+                        </div>
+                        <div
+                            class="p-6 rounded-2xl bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700"
+                        >
+                            <div class="flex gap-4">
+                                <img
+                                    src={logos.tuhh}
+                                    alt="TU Hamburg"
+                                    class="w-12 h-12 object-contain shrink-0"
+                                />
+                                <div class="flex-1">
+                                    <div
+                                        class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2"
+                                    >
+                                        <h3
+                                            class="font-display font-bold text-xl text-neutral-900 dark:text-white"
+                                        >
+                                            Researcher & PhD Candidate
+                                        </h3>
+                                        <Badge
+                                            variant="success"
+                                            size="sm"
+                                            dot
+                                            pulse>{t("cv.present")}</Badge
+                                        >
+                                    </div>
+                                    <p class="text-accent font-medium mb-3">
+                                        Institute of Entrepreneurship, TU
+                                        Hamburg
+                                    </p>
+                                    <ul
+                                        class="text-neutral-600 dark:text-neutral-400 text-sm space-y-1"
+                                    >
+                                        <li>
+                                            • PhD research: "Diffusion of AI
+                                            concepts in science and industry"
+                                        </li>
+                                        <li>
+                                            • Natural Language Processing &
+                                            Large Language Models
+                                        </li>
+                                        <li>
+                                            • Teaching: Technology
+                                            Entrepreneurship & Deep Learning
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Reforge Labs -->
+                    <div
+                        class="relative pl-8"
+                        data-reveal
+                        style="--stagger-index: 1;"
+                    >
+                        <div
+                            class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-accent border-4 border-white dark:border-neutral-900"
+                        >
+                        </div>
+                        <div
+                            class="p-6 rounded-2xl bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700"
+                        >
+                            <div class="flex gap-4">
+                                <img
+                                    src={logos.reforge}
+                                    alt="Reforge Labs"
+                                    class="w-12 h-12 object-contain shrink-0"
+                                />
+                                <div class="flex-1">
+                                    <div
+                                        class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2"
+                                    >
+                                        <h3
+                                            class="font-display font-bold text-xl text-neutral-900 dark:text-white"
+                                        >
+                                            Founder & Engineer
+                                        </h3>
+                                        <Badge
+                                            variant="success"
+                                            size="sm"
+                                            dot
+                                            pulse>{t("cv.present")}</Badge
+                                        >
+                                    </div>
+                                    <a
+                                        href="https://reforgelabs.com"
+                                        target="_blank"
+                                        class="text-accent hover:underline font-medium mb-3 inline-block"
+                                    >
+                                        Reforge Labs
+                                    </a>
+                                    <p
+                                        class="text-neutral-600 dark:text-neutral-400"
+                                    >
+                                        Building innovative technical solutions
+                                        and products. Leading development and
+                                        strategy.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- IT Consultant -->
+                    <div
+                        class="relative pl-8"
+                        data-reveal
+                        style="--stagger-index: 2;"
+                    >
+                        <div
+                            class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-accent border-4 border-white dark:border-neutral-900"
+                        >
+                        </div>
+                        <div
+                            class="p-6 rounded-2xl bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700"
+                        >
+                            <div class="flex gap-4">
+                                <div
+                                    class="w-12 h-12 rounded-xl bg-gradient-to-br from-accent to-cyan-500 flex items-center justify-center shrink-0"
+                                >
+                                    <svg
+                                        class="w-6 h-6 text-white"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
+                                        ></path>
+                                    </svg>
+                                </div>
+                                <div class="flex-1">
+                                    <div
+                                        class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2"
+                                    >
+                                        <h3
+                                            class="font-display font-bold text-xl text-neutral-900 dark:text-white"
+                                        >
+                                            IT Consultant (Freelance)
+                                        </h3>
+                                        <Badge variant="outline" size="sm"
+                                            >2014 - {t("cv.present")}</Badge
+                                        >
+                                    </div>
+                                    <p
+                                        class="text-neutral-600 dark:text-neutral-400"
+                                    >
+                                        Consulting and implementation of IT
+                                        solutions. Experienced in handling new
+                                        technologies and active change
+                                        management.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CTO Cargofaces -->
+                    <div
+                        class="relative pl-8"
+                        data-reveal
+                        style="--stagger-index: 3;"
+                    >
+                        <div
+                            class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-accent border-4 border-white dark:border-neutral-900"
+                        >
+                        </div>
+                        <div
+                            class="p-6 rounded-2xl bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700"
+                        >
+                            <div class="flex gap-4">
+                                <img
+                                    src={logos.cargofaces}
+                                    alt="Cargofaces"
+                                    class="w-12 h-12 object-contain shrink-0"
+                                />
+                                <div class="flex-1">
+                                    <div
+                                        class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2"
+                                    >
+                                        <h3
+                                            class="font-display font-bold text-xl text-neutral-900 dark:text-white"
+                                        >
+                                            Chief Technical Officer (CTO)
+                                        </h3>
+                                        <Badge variant="outline" size="sm"
+                                            >11.2021 - 11.2022</Badge
+                                        >
+                                    </div>
+                                    <p class="text-accent font-medium mb-3">
+                                        Cargofaces | Supply Chain Start-Up
+                                    </p>
+                                    <ul
+                                        class="text-neutral-600 dark:text-neutral-400 text-sm space-y-1"
+                                    >
+                                        <li>
+                                            • Strategic development and
+                                            implementation of the Cargofaces
+                                            platform
+                                        </li>
+                                        <li>
+                                            • Product owner in agile software
+                                            development environment
+                                        </li>
+                                        <li>
+                                            • Customer & investor pitches,
+                                            networking events & accelerator
+                                            programs
+                                        </li>
+                                        <li>
+                                            • Market research, funding
+                                            strategies & public relations
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Porsche AG -->
+                    <div
+                        class="relative pl-8"
+                        data-reveal
+                        style="--stagger-index: 4;"
+                    >
+                        <div
+                            class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-accent border-4 border-white dark:border-neutral-900"
+                        >
+                        </div>
+                        <div
+                            class="p-6 rounded-2xl bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700"
+                        >
+                            <div class="flex gap-4">
+                                <img
+                                    src={logos.porsche}
+                                    alt="Porsche AG"
+                                    class="w-12 h-12 object-contain shrink-0"
+                                />
+                                <div class="flex-1">
+                                    <div
+                                        class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2"
+                                    >
+                                        <h3
+                                            class="font-display font-bold text-xl text-neutral-900 dark:text-white"
+                                        >
+                                            Coordinator Processes &
+                                            Digitalization
+                                        </h3>
+                                        <Badge variant="outline" size="sm"
+                                            >10.2018 - 09.2019</Badge
+                                        >
+                                    </div>
+                                    <p class="text-accent font-medium mb-3">
+                                        Porsche AG - Project Management
+                                        Digitalization
+                                    </p>
+                                    <ul
+                                        class="text-neutral-600 dark:text-neutral-400 text-sm space-y-1"
+                                    >
+                                        <li>
+                                            • Project lead for GDPR-compliant
+                                            HR-IT systems (SAP)
+                                        </li>
+                                        <li>
+                                            • Introduction & key user function
+                                            for digital personnel file
+                                        </li>
+                                        <li>
+                                            • Agile collaboration models and
+                                            methodology implementation
+                                        </li>
+                                        <li>
+                                            • Innovation management and start-up
+                                            highway
+                                        </li>
+                                        <li>
+                                            • Conceptual design of company-wide
+                                            HR IT strategy
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Education -->
+        <section class="px-6 md:px-8 mb-16">
+            <div class="max-w-4xl mx-auto">
+                <h2
+                    class="font-display font-bold text-2xl text-neutral-900 dark:text-white mb-8 flex items-center gap-3"
+                    data-reveal
+                >
+                    <span
+                        class="flex items-center justify-center w-10 h-10 rounded-full bg-indigo-100 dark:bg-indigo-900/30"
+                    >
+                        <svg
+                            class="w-5 h-5 text-indigo-600 dark:text-indigo-400"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M12 14l9-5-9-5-9 5 9 5z"></path>
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"
+                            ></path>
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"
+                            ></path>
+                        </svg>
+                    </span>
+                    {t("cv.education")}
+                </h2>
+
+                <div
+                    class="relative border-l-2 border-neutral-200 dark:border-neutral-700 ml-5 space-y-8"
+                >
+                    <!-- PhD -->
+                    <div
+                        class="relative pl-8"
+                        data-reveal
+                        style="--stagger-index: 0;"
+                    >
+                        <div
+                            class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-indigo-500 border-4 border-white dark:border-neutral-900"
+                        >
+                        </div>
+                        <div
+                            class="p-6 rounded-2xl bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-200 dark:border-indigo-800/30"
+                        >
+                            <div class="flex gap-4 mb-4">
+                                <img
+                                    src={logos.tuhh}
+                                    alt="TU Hamburg"
+                                    class="w-12 h-12 object-contain shrink-0"
+                                />
+                                <div class="flex-1">
+                                    <div
+                                        class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2"
+                                    >
+                                        <h3
+                                            class="font-display font-bold text-xl text-neutral-900 dark:text-white"
+                                        >
+                                            Ph.D. in Computer Science and Social
+                                            Science (Dr.-Ing.)
+                                        </h3>
+                                        <Badge
+                                            variant="success"
+                                            size="sm"
+                                            dot
+                                            pulse>{t("cv.present")}</Badge
+                                        >
+                                    </div>
+                                    <p
+                                        class="text-indigo-600 dark:text-indigo-400 font-medium"
+                                    >
+                                        Hamburg University of Technology (TU
+                                        Hamburg)
+                                    </p>
+                                </div>
+                            </div>
+                            <div
+                                class="p-4 rounded-xl bg-white dark:bg-neutral-800 border border-indigo-100 dark:border-indigo-800/30"
+                            >
+                                <p
+                                    class="font-semibold text-neutral-700 dark:text-neutral-200 mb-1"
+                                >
+                                    {t("cv.dissertation")}
+                                </p>
+                                <p
+                                    class="text-neutral-600 dark:text-neutral-400 text-sm italic mb-4"
+                                >
+                                    "Diffusion of AI concepts across the global
+                                    scientific landscape"
+                                </p>
+                                <p
+                                    class="font-semibold text-neutral-700 dark:text-neutral-200 mb-2 text-sm"
+                                >
+                                    {t("cv.focusAreas")}:
+                                </p>
+                                <div class="flex flex-wrap gap-2">
+                                    {
+                                        [
+                                            "Natural Language Processing",
+                                            "Large Language Models",
+                                            "Science of Science",
+                                            "Knowledge Graphs",
+                                            "Concept Extraction",
+                                        ].map((area) => (
+                                            <Badge variant="outline" size="sm">
+                                                {area}
+                                            </Badge>
+                                        ))
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Master -->
+                    <div
+                        class="relative pl-8"
+                        data-reveal
+                        style="--stagger-index: 1;"
+                    >
+                        <div
+                            class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-indigo-500 border-4 border-white dark:border-neutral-900"
+                        >
+                        </div>
+                        <div
+                            class="p-6 rounded-2xl bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700"
+                        >
+                            <div class="flex gap-4 mb-4">
+                                <img
+                                    src={logos.tuhh}
+                                    alt="TU Hamburg"
+                                    class="w-12 h-12 object-contain shrink-0"
+                                />
+                                <div class="flex-1">
+                                    <div
+                                        class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2"
+                                    >
+                                        <h3
+                                            class="font-display font-bold text-xl text-neutral-900 dark:text-white"
+                                        >
+                                            M. Sc. International Industrial
+                                            Engineering (120 ECTS)
+                                        </h3>
+                                        <Badge variant="outline" size="sm"
+                                            >10.2019 - 09.2021</Badge
+                                        >
+                                    </div>
+                                    <p
+                                        class="text-indigo-600 dark:text-indigo-400 font-medium"
+                                    >
+                                        Hamburg University of Technology (TU
+                                        Hamburg)
+                                    </p>
+                                </div>
+                            </div>
+                            <div
+                                class="p-4 rounded-xl bg-white dark:bg-neutral-800 border border-neutral-100 dark:border-neutral-700 mb-4"
+                            >
+                                <p
+                                    class="font-semibold text-neutral-700 dark:text-neutral-200 mb-1"
+                                >
+                                    {t("cv.masterThesis")} (Grade: 1.0)
+                                </p>
+                                <p
+                                    class="text-neutral-600 dark:text-neutral-400 text-sm italic mb-4"
+                                >
+                                    "Design and implementation of a
+                                    blockchain-based asset tracking service"
+                                </p>
+                                <p
+                                    class="font-semibold text-neutral-700 dark:text-neutral-200 mb-2 text-sm"
+                                >
+                                    {t("cv.focusAreas")}:
+                                </p>
+                                <div class="flex flex-wrap gap-2">
+                                    {
+                                        [
+                                            "International Business",
+                                            "Production & Logistics",
+                                            "Innovation Management",
+                                            "Software Security",
+                                            "Operations Research",
+                                        ].map((area) => (
+                                            <Badge variant="outline" size="sm">
+                                                {area}
+                                            </Badge>
+                                        ))
+                                    }
+                                </div>
+                            </div>
+
+                            <!-- Concurrent Work: Research Associate -->
+                            <div
+                                class="p-4 rounded-xl bg-accent/5 dark:bg-accent/10 border border-accent/20"
+                            >
+                                <div class="flex items-start gap-3">
+                                    <div
+                                        class="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center shrink-0 mt-0.5"
+                                    >
+                                        <svg
+                                            class="w-4 h-4 text-accent"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                stroke-width="2"
+                                                d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                                            ></path>
+                                        </svg>
+                                    </div>
+                                    <div class="flex-1">
+                                        <div
+                                            class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-1"
+                                        >
+                                            <p
+                                                class="font-semibold text-neutral-700 dark:text-neutral-200 text-sm"
+                                            >
+                                                {t("cv.concurrentWork")}:
+                                                Research Associate
+                                            </p>
+                                            <Badge variant="outline" size="sm"
+                                                >01.2020 - 09.2021</Badge
+                                            >
+                                        </div>
+                                        <p
+                                            class="text-neutral-600 dark:text-neutral-400 text-sm"
+                                        >
+                                            PhD research on AI diffusion,
+                                            blockchain applications, hosting MLE
+                                            Days conference, teaching Technology
+                                            Entrepreneurship.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bachelor -->
+                    <div
+                        class="relative pl-8"
+                        data-reveal
+                        style="--stagger-index: 2;"
+                    >
+                        <div
+                            class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-indigo-500 border-4 border-white dark:border-neutral-900"
+                        >
+                        </div>
+                        <div
+                            class="p-6 rounded-2xl bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700"
+                        >
+                            <div class="flex gap-4 mb-4">
+                                <img
+                                    src={logos.uniKiel}
+                                    alt="Kiel University"
+                                    class="w-12 h-12 object-contain shrink-0"
+                                />
+                                <div class="flex-1">
+                                    <div
+                                        class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2"
+                                    >
+                                        <h3
+                                            class="font-display font-bold text-xl text-neutral-900 dark:text-white"
+                                        >
+                                            B. Sc. Electrical Engineering & IT
+                                            (210 ECTS)
+                                        </h3>
+                                        <Badge variant="outline" size="sm"
+                                            >10.2014 - 09.2018</Badge
+                                        >
+                                    </div>
+                                    <p
+                                        class="text-indigo-600 dark:text-indigo-400 font-medium"
+                                    >
+                                        Kiel University
+                                        (Christian-Albrechts-Universität)
+                                    </p>
+                                </div>
+                            </div>
+                            <div
+                                class="p-4 rounded-xl bg-white dark:bg-neutral-800 border border-neutral-100 dark:border-neutral-700 mb-4"
+                            >
+                                <p
+                                    class="font-semibold text-neutral-700 dark:text-neutral-200 mb-1"
+                                >
+                                    {t("cv.bachelorThesis")} (Grade: 1.0)
+                                </p>
+                                <p
+                                    class="text-neutral-600 dark:text-neutral-400 text-sm italic mb-4"
+                                >
+                                    "An application of Reinforcement Learning on
+                                    biological neural networks for dynamic
+                                    systems control (Inverted Pendulum)"
+                                </p>
+                                <p
+                                    class="font-semibold text-neutral-700 dark:text-neutral-200 mb-2 text-sm"
+                                >
+                                    {t("cv.curriculum")}:
+                                </p>
+                                <div class="flex flex-wrap gap-2">
+                                    {
+                                        [
+                                            "Electrical Engineering",
+                                            "Control Engineering",
+                                            "Signal & System Theory",
+                                            "Business Administration",
+                                            "Power Electronics",
+                                        ].map((area) => (
+                                            <Badge variant="outline" size="sm">
+                                                {area}
+                                            </Badge>
+                                        ))
+                                    }
+                                </div>
+                            </div>
+
+                            <!-- Concurrent Work: Webmaster -->
+                            <div
+                                class="p-4 rounded-xl bg-accent/5 dark:bg-accent/10 border border-accent/20"
+                            >
+                                <div class="flex items-start gap-3">
+                                    <div
+                                        class="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center shrink-0 mt-0.5"
+                                    >
+                                        <svg
+                                            class="w-4 h-4 text-accent"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                stroke-width="2"
+                                                d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                                            ></path>
+                                        </svg>
+                                    </div>
+                                    <div class="flex-1">
+                                        <div
+                                            class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-1"
+                                        >
+                                            <p
+                                                class="font-semibold text-neutral-700 dark:text-neutral-200 text-sm"
+                                            >
+                                                {t("cv.concurrentWork")}:
+                                                Research Associate - Webmaster
+                                            </p>
+                                            <Badge variant="outline" size="sm"
+                                                >07.2016 - 10.2017</Badge
+                                            >
+                                        </div>
+                                        <p
+                                            class="text-neutral-600 dark:text-neutral-400 text-sm"
+                                        >
+                                            Technical Faculty web presence
+                                            development, virtual 360° lab tours,
+                                            print & media design.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- High School -->
+                    <div
+                        class="relative pl-8"
+                        data-reveal
+                        style="--stagger-index: 3;"
+                    >
+                        <div
+                            class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-indigo-500 border-4 border-white dark:border-neutral-900"
+                        >
+                        </div>
+                        <div
+                            class="p-6 rounded-2xl bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700"
+                        >
+                            <div class="flex gap-4 mb-4">
+                                <img
+                                    src={logos.gymnasium}
+                                    alt="Steinhagener Gymnasium"
+                                    class="w-12 h-12 object-contain shrink-0"
+                                />
+                                <div class="flex-1">
+                                    <div
+                                        class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2"
+                                    >
+                                        <h3
+                                            class="font-display font-bold text-xl text-neutral-900 dark:text-white"
+                                        >
+                                            Abitur
+                                        </h3>
+                                        <Badge variant="outline" size="sm"
+                                            >07.2006 - 06.2014</Badge
+                                        >
+                                    </div>
+                                    <p
+                                        class="text-indigo-600 dark:text-indigo-400 font-medium"
+                                    >
+                                        Steinhagener Gymnasium
+                                    </p>
+                                </div>
+                            </div>
+                            <p
+                                class="text-neutral-600 dark:text-neutral-400 mb-4"
+                            >
+                                {t("cv.majors")}: Mathematics & Physics
+                            </p>
+                            <div
+                                class="p-4 rounded-xl bg-accent/5 border border-accent/20"
+                            >
+                                <p
+                                    class="text-sm text-neutral-700 dark:text-neutral-300 flex items-center gap-2"
+                                >
+                                    <svg
+                                        class="w-4 h-4 text-accent"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                                        ></path>
+                                    </svg>
+                                    2010: {t("cv.studentExchange")} in Fort Smith,
+                                    AR, USA
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Internships -->
+        <section class="px-6 md:px-8 mb-16">
+            <div class="max-w-4xl mx-auto">
+                <h2
+                    class="font-display font-bold text-2xl text-neutral-900 dark:text-white mb-8 flex items-center gap-3"
+                    data-reveal
+                >
+                    <span
+                        class="flex items-center justify-center w-10 h-10 rounded-full bg-neutral-100 dark:bg-neutral-800"
+                    >
+                        <svg
+                            class="w-5 h-5 text-neutral-600 dark:text-neutral-400"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+                            ></path>
+                        </svg>
+                    </span>
+                    {t("cv.internships")}
+                </h2>
+
+                <!-- Featured Internships -->
+                <div class="grid md:grid-cols-2 gap-4 mb-6">
+                    <div
+                        class="p-6 rounded-2xl bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700"
+                        data-reveal
+                        style="--stagger-index: 0;"
+                    >
+                        <div class="flex gap-4">
+                            <img
+                                src={logos.porsche}
+                                alt="Porsche AG"
+                                class="w-10 h-10 object-contain shrink-0"
+                            />
+                            <div class="flex-1">
+                                <div
+                                    class="flex items-center justify-between mb-2"
+                                >
+                                    <h3
+                                        class="font-display font-bold text-lg text-neutral-900 dark:text-white"
+                                    >
+                                        Porsche AG
+                                    </h3>
+                                    <Badge variant="outline" size="sm"
+                                        >11.2017 - 04.2018</Badge
+                                    >
+                                </div>
+                                <p class="text-accent font-medium text-sm mb-2">
+                                    IT Processes & Digitalization
+                                </p>
+                                <ul
+                                    class="text-sm text-neutral-600 dark:text-neutral-400 space-y-1"
+                                >
+                                    <li>• Interface between HR and IT</li>
+                                    <li>
+                                        • Introduction of new digital media for
+                                        HR
+                                    </li>
+                                    <li>
+                                        • Creation of intranet and My Porsche
+                                        Cockpit
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="p-6 rounded-2xl bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700"
+                        data-reveal
+                        style="--stagger-index: 1;"
+                    >
+                        <div class="flex gap-4">
+                            <img
+                                src={logos.filipp}
+                                alt="Horst Filipp GmbH"
+                                class="w-10 h-10 object-contain shrink-0"
+                            />
+                            <div class="flex-1">
+                                <div
+                                    class="flex items-center justify-between mb-2"
+                                >
+                                    <h3
+                                        class="font-display font-bold text-lg text-neutral-900 dark:text-white"
+                                    >
+                                        Horst Filipp GmbH
+                                    </h3>
+                                    <Badge variant="outline" size="sm"
+                                        >06.2014 - 08.2014</Badge
+                                    >
+                                </div>
+                                <p class="text-accent font-medium text-sm mb-2">
+                                    Basic Industrial Internship
+                                </p>
+                                <ul
+                                    class="text-sm text-neutral-600 dark:text-neutral-400 space-y-1"
+                                >
+                                    <li>
+                                        • Basics of turning, milling, drilling
+                                    </li>
+                                    <li>
+                                        • Metal types and machining operations
+                                    </li>
+                                    <li>
+                                        • Installation and programming of CNC
+                                        machines
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Smaller Internships -->
+                <div class="grid md:grid-cols-3 gap-4">
+                    <div
+                        class="p-4 rounded-xl bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700"
+                        data-reveal
+                        style="--stagger-index: 2;"
+                    >
+                        <h3
+                            class="font-display font-bold text-neutral-900 dark:text-white mb-1"
+                        >
+                            Golf Club Teutoburger Wald
+                        </h3>
+                        <p
+                            class="text-sm text-neutral-500 dark:text-neutral-400 mb-2"
+                        >
+                            Halle Westf.
+                        </p>
+                        <p
+                            class="text-sm text-neutral-600 dark:text-neutral-400"
+                        >
+                            6 Weeks Economic Internship
+                        </p>
+                    </div>
+
+                    <div
+                        class="p-4 rounded-xl bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700"
+                        data-reveal
+                        style="--stagger-index: 3;"
+                    >
+                        <h3
+                            class="font-display font-bold text-neutral-900 dark:text-white mb-1"
+                        >
+                            HO Systeme
+                        </h3>
+                        <p
+                            class="text-sm text-neutral-500 dark:text-neutral-400 mb-2"
+                        >
+                            Halle Westf.
+                        </p>
+                        <p
+                            class="text-sm text-neutral-600 dark:text-neutral-400"
+                        >
+                            2 Weeks IT & Comm. Tech Internship
+                        </p>
+                    </div>
+
+                    <div
+                        class="p-4 rounded-xl bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700"
+                        data-reveal
+                        style="--stagger-index: 4;"
+                    >
+                        <h3
+                            class="font-display font-bold text-neutral-900 dark:text-white mb-1"
+                        >
+                            Niehaus & Rückert
+                        </h3>
+                        <p
+                            class="text-sm text-neutral-500 dark:text-neutral-400 mb-2"
+                        >
+                            Bielefeld
+                        </p>
+                        <p
+                            class="text-sm text-neutral-600 dark:text-neutral-400"
+                        >
+                            2 Weeks Production Internship
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Voluntary -->
+        <section class="px-6 md:px-8 mb-16">
+            <div class="max-w-4xl mx-auto">
+                <h2
+                    class="font-display font-bold text-2xl text-neutral-900 dark:text-white mb-8 flex items-center gap-3"
+                    data-reveal
+                >
+                    <span
+                        class="flex items-center justify-center w-10 h-10 rounded-full bg-emerald-100 dark:bg-emerald-900/30"
+                    >
+                        <svg
+                            class="w-5 h-5 text-emerald-600 dark:text-emerald-400"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                            ></path>
+                        </svg>
+                    </span>
+                    {t("cv.voluntary")}
+                </h2>
+
+                <div
+                    class="p-6 rounded-2xl bg-emerald-50 dark:bg-emerald-900/10 border border-emerald-200 dark:border-emerald-800/30"
+                    data-reveal
+                >
+                    <div class="flex gap-4">
+                        <img
+                            src={logos.ecomap}
+                            alt="Ecomap Global"
+                            class="w-12 h-12 object-contain shrink-0"
+                        />
+                        <div class="flex-1">
+                            <div
+                                class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2"
+                            >
+                                <h3
+                                    class="font-display font-bold text-xl text-neutral-900 dark:text-white"
+                                >
+                                    Head of IT & Dev-Ops
+                                </h3>
+                                <Badge variant="outline" size="sm"
+                                    >07.2020 - 02.2022</Badge
+                                >
+                            </div>
+                            <a
+                                href="https://www.ecomap.global"
+                                target="_blank"
+                                class="text-emerald-600 dark:text-emerald-400 hover:underline font-medium mb-3 inline-block"
+                            >
+                                Ecomap Global gGmbH (Non-Profit)
+                            </a>
+                            <p class="text-neutral-600 dark:text-neutral-400">
+                                Development of an online map for sustainable
+                                SMEs. Coordination of a European team (20
+                                people) in cooperation with Oikos International.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Links -->
+        <section class="px-6 md:px-8">
+            <div class="max-w-4xl mx-auto">
+                <h2
+                    class="font-display font-bold text-2xl text-neutral-900 dark:text-white mb-8 flex items-center gap-3"
+                    data-reveal
+                >
+                    <span
+                        class="flex items-center justify-center w-10 h-10 rounded-full bg-neutral-100 dark:bg-neutral-800"
+                    >
+                        <svg
+                            class="w-5 h-5 text-neutral-600 dark:text-neutral-400"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
+                            ></path>
+                        </svg>
+                    </span>
+                    {t("cv.references")}
+                </h2>
+
+                <div class="grid md:grid-cols-2 gap-4">
+                    <a
+                        href="http://boostnow.de/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="group p-6 rounded-2xl bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700 hover:border-accent/50 transition-colors"
+                        data-reveal
+                        style="--stagger-index: 0;"
+                    >
+                        <h3
+                            class="font-display font-bold text-lg text-neutral-900 dark:text-white mb-2 group-hover:text-accent transition-colors"
+                        >
+                            BoostNow
+                        </h3>
+                        <p
+                            class="text-sm text-neutral-600 dark:text-neutral-400"
+                        >
+                            Former project / reference homepage.
+                        </p>
+                    </a>
+
+                    <a
+                        href="https://github.com/J0nasW"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="group p-6 rounded-2xl bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700 hover:border-accent/50 transition-colors"
+                        data-reveal
+                        style="--stagger-index: 1;"
+                    >
+                        <h3
+                            class="font-display font-bold text-lg text-neutral-900 dark:text-white mb-2 group-hover:text-accent transition-colors"
+                        >
+                            GitHub (J0nasW)
+                        </h3>
+                        <p
+                            class="text-sm text-neutral-600 dark:text-neutral-400"
+                        >
+                            Check out my code and repositories.
+                        </p>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <Footer lang={lang} />
+</Layout>

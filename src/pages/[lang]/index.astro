@@ -1,0 +1,311 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import HeroSection from "../../components/sections/HeroSection.astro";
+import FeaturedCard from "../../components/sections/FeaturedCard.astro";
+import MarqueeStrip from "../../components/sections/MarqueeStrip.astro";
+import CTASection from "../../components/sections/CTASection.astro";
+import Badge from "../../components/ui/Badge.astro";
+import Footer from "../../components/Footer.astro";
+import { getCollection } from "astro:content";
+import { languages, useTranslations, type Lang } from "../../i18n/index";
+import { formatShortDate, getLocalizedPath } from "../../i18n/utils";
+
+export function getStaticPaths() {
+    return Object.keys(languages).map((lang) => ({
+        params: { lang },
+    }));
+}
+
+const { lang } = Astro.params as { lang: Lang };
+const t = useTranslations(lang);
+
+// Fetch latest content
+const publications = (await getCollection("publications"))
+    .sort((a, b) => b.data.year - a.data.year)
+    .slice(0, 1);
+
+// For blog posts, filter by language if content is organized by language
+const allPosts = await getCollection("blog");
+const posts = allPosts
+    .filter((post) => {
+        // Check if post is in a language-specific folder or has no language folder
+        const pathParts = post.id.split("/");
+        if (
+            pathParts.length > 1 &&
+            (pathParts[0] === "en" || pathParts[0] === "de")
+        ) {
+            return pathParts[0] === lang;
+        }
+        // Posts without language folder show for all languages (legacy support)
+        return true;
+    })
+    .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+    .slice(0, 2);
+
+const latestPub = publications[0];
+const latestPost = posts[0];
+
+// Tech stack
+const techStack = [
+    "Next.js",
+    "React",
+    "Astro",
+    "Python",
+    "PyTorch",
+    "Transformers",
+    "LangChain",
+    "RAG",
+    "Docker",
+    "AWS",
+    "Google Cloud",
+    "Node.js",
+    "PostgreSQL",
+    "Graph Databases",
+    "Vector Databases",
+];
+---
+
+<Layout title="Jonas Wilinski - Researcher & Developer" lang={lang}>
+    <!-- Hero Section -->
+    <HeroSection
+        name="Jonas Wilinski"
+        title={t("hero.title")}
+        subtitle={t("hero.subtitle")}
+        lang={lang}
+    />
+
+    <!-- Featured Work Section -->
+    <section
+        class="py-16 md:py-24 px-6 md:px-8 bg-neutral-50 dark:bg-neutral-900/50"
+    >
+        <div class="max-w-6xl mx-auto">
+            <!-- Section Header -->
+            <div class="text-center mb-12" data-reveal>
+                <span
+                    class="text-xs font-bold uppercase tracking-wider text-accent mb-2 block"
+                >
+                    {t("featured.label")}
+                </span>
+                <h2
+                    class="font-display font-bold text-3xl md:text-4xl text-neutral-900 dark:text-white"
+                >
+                    {t("featured.title")}
+                </h2>
+            </div>
+
+            <!-- Featured Grid -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Latest Research -->
+                {
+                    latestPub && (
+                        <div data-reveal class="h-full" style="--stagger-index: 0;">
+                            <FeaturedCard
+                                title={latestPub.data.title}
+                                subtitle={t("featured.latestResearch")}
+                                description={`${latestPub.data.venue} • ${latestPub.data.year}`}
+                                href={getLocalizedPath("/publications", lang)}
+                                size="large"
+                                lang={lang}
+                            >
+                                <div class="mt-auto pt-4 flex flex-wrap gap-2">
+                                    <Badge variant="accent" size="sm">
+                                        {t("featured.paper")}
+                                    </Badge>
+                                    {latestPub.data.pdf && (
+                                        <Badge variant="outline" size="sm">
+                                            {t("featured.pdfAvailable")}
+                                        </Badge>
+                                    )}
+                                </div>
+                            </FeaturedCard>
+                        </div>
+                    )
+                }
+
+                <!-- Latest Blog Post -->
+                {
+                    latestPost && (
+                        <div data-reveal class="h-full" style="--stagger-index: 1;">
+                            <FeaturedCard
+                                title={latestPost.data.title}
+                                subtitle={t("featured.latestPost")}
+                                description={latestPost.data.description}
+                                href={getLocalizedPath(
+                                    `/blog/${latestPost.id.replace(/^(en|de)\//, "").replace(/\.md$/, "")}`,
+                                    lang,
+                                )}
+                                size="large"
+                                lang={lang}
+                            >
+                                <div class="mt-auto pt-4 flex flex-wrap gap-2">
+                                    <Badge variant="outline" size="sm">
+                                        {formatShortDate(
+                                            latestPost.data.pubDate,
+                                            lang,
+                                        )}
+                                    </Badge>
+                                </div>
+                            </FeaturedCard>
+                        </div>
+                    )
+                }
+
+                <!-- Reforge Labs -->
+                <div data-reveal class="h-full" style="--stagger-index: 2;">
+                    <FeaturedCard
+                        title="Reforge Labs"
+                        subtitle={t("featured.founder")}
+                        description={t("featured.reforgeDescription")}
+                        href="https://reforgelabs.com"
+                        variant="accent"
+                        size="large"
+                        external
+                        lang={lang}
+                    />
+                </div>
+            </div>
+
+            <!-- Secondary Cards Row -->
+            <div class="grid md:grid-cols-2 gap-6 mt-6">
+                <!-- Location -->
+                <div data-reveal style="--stagger-index: 3;">
+                    <div
+                        class="relative p-6 md:p-8 rounded-3xl bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700/50 overflow-hidden"
+                    >
+                        <!-- Background Pattern -->
+                        <div class="absolute inset-0 bg-dots opacity-30"></div>
+
+                        <div class="relative z-10">
+                            <span
+                                class="text-xs font-bold uppercase tracking-wider text-accent mb-2 block"
+                            >
+                                {t("featured.location")}
+                            </span>
+                            <h3
+                                class="font-display font-bold text-xl text-neutral-900 dark:text-white mb-4"
+                            >
+                                {t("featured.locationCity")}
+                            </h3>
+
+                            <div class="flex items-center gap-4">
+                                <!-- Animated Pin -->
+                                <div class="relative flex items-center justify-center">
+                                    <span
+                                        class="absolute h-4 w-4 rounded-full bg-accent/40 animate-pulse-ring"
+                                    ></span>
+                                    <span
+                                        class="absolute h-3 w-3 rounded-full bg-accent/20 animate-pulse-ring-delayed"
+                                    ></span>
+                                    <span
+                                        class="relative inline-flex rounded-full h-2.5 w-2.5 bg-accent shadow-lg shadow-accent/50"
+                                    ></span>
+                                </div>
+                                <span
+                                    class="text-sm text-neutral-500 dark:text-neutral-400"
+                                    id="local-time"
+                                >
+                                    {t("featured.localTime")}: --:--
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Stats -->
+                <div data-reveal style="--stagger-index: 4;">
+                    <div
+                        class="p-6 md:p-8 rounded-3xl bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700/50"
+                    >
+                        <span
+                            class="text-xs font-bold uppercase tracking-wider text-accent mb-4 block"
+                        >
+                            {t("featured.quickStats")}
+                        </span>
+
+                        <div class="grid grid-cols-3 gap-4">
+                            <div>
+                                <div
+                                    class="font-display font-bold text-2xl md:text-3xl text-neutral-900 dark:text-white"
+                                >
+                                    5+
+                                </div>
+                                <div
+                                    class="text-sm text-neutral-500 dark:text-neutral-400"
+                                >
+                                    {t("featured.yearsExp")}
+                                </div>
+                            </div>
+                            <div>
+                                <div
+                                    class="font-display font-bold text-2xl md:text-3xl text-neutral-900 dark:text-white"
+                                >
+                                    3
+                                </div>
+                                <div
+                                    class="text-sm text-neutral-500 dark:text-neutral-400"
+                                >
+                                    {t("featured.publications")}
+                                </div>
+                            </div>
+                            <div>
+                                <div
+                                    class="font-display font-bold text-2xl md:text-3xl text-neutral-900 dark:text-white"
+                                >
+                                    10+
+                                </div>
+                                <div
+                                    class="text-sm text-neutral-500 dark:text-neutral-400"
+                                >
+                                    {t("featured.projects")}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack Marquee -->
+    <section
+        class="py-16 md:py-20 border-y border-neutral-200 dark:border-neutral-800"
+    >
+        <div class="text-center mb-8 px-6" data-reveal>
+            <span
+                class="text-xs font-bold uppercase tracking-wider text-accent"
+            >
+                {t("techStack.label")}
+            </span>
+        </div>
+        <MarqueeStrip items={techStack} speed="normal" />
+    </section>
+
+    <!-- CTA Section -->
+    <CTASection lang={lang} />
+
+    <!-- Footer -->
+    <Footer lang={lang} />
+</Layout>
+
+<script>
+    const updateLocalTime = () => {
+        const timeEl = document.getElementById("local-time");
+        if (timeEl) {
+            const now = new Date();
+            const time = now.toLocaleTimeString("de-DE", {
+                hour: "2-digit",
+                minute: "2-digit",
+                timeZone: "Europe/Berlin",
+            });
+            // Get the label text before the colon
+            const currentText = timeEl.textContent || "";
+            const labelMatch = currentText.match(/^(.+?):/);
+            const label = labelMatch ? labelMatch[1] : "Local time";
+            timeEl.textContent = `${label}: ${time}`;
+        }
+    };
+
+    updateLocalTime();
+    setInterval(updateLocalTime, 60000);
+    document.addEventListener("astro:page-load", updateLocalTime);
+</script>

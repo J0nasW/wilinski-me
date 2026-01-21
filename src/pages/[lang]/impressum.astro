@@ -1,0 +1,102 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Footer from '../../components/Footer.astro';
+import { languages, useTranslations, type Lang } from '../../i18n/index';
+
+export function getStaticPaths() {
+    return Object.keys(languages).map((lang) => ({
+        params: { lang },
+    }));
+}
+
+const { lang } = Astro.params as { lang: Lang };
+const t = useTranslations(lang);
+---
+
+<Layout title={`${t('impressum.title')} - Jonas Wilinski`} lang={lang}>
+    <main class="pt-24 pb-16">
+        <!-- Header -->
+        <section class="px-6 md:px-8 mb-12">
+            <div class="max-w-3xl mx-auto">
+                <div data-reveal>
+                    <span class="text-xs font-bold uppercase tracking-wider text-accent mb-2 block">
+                        {t('impressum.label')}
+                    </span>
+                    <h1 class="font-display font-bold text-4xl md:text-5xl text-neutral-900 dark:text-white mb-4">
+                        {t('impressum.title')}
+                    </h1>
+                </div>
+            </div>
+        </section>
+
+        <!-- Content -->
+        <section class="px-6 md:px-8">
+            <div class="max-w-3xl mx-auto">
+                <div class="p-8 md:p-10 rounded-3xl bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700" data-reveal>
+                    <div class="prose prose-neutral dark:prose-invert max-w-none
+                        prose-headings:font-display prose-headings:font-bold
+                        prose-h3:text-lg prose-h3:mt-8 prose-h3:mb-4
+                        prose-p:text-neutral-600 dark:prose-p:text-neutral-400
+                        prose-a:text-accent prose-a:no-underline hover:prose-a:underline
+                    ">
+                        <h3>{t('impressum.accordingTo')} § 5 TMG</h3>
+                        <p>
+                            Jonas Wilinski<br />
+                            Kirchstr. 6<br />
+                            21218 Seevetal (bei Hamburg)
+                        </p>
+
+                        <h3>{t('impressum.contact')}</h3>
+                        <p>
+                            <span class="protected-phone" data-phone="0156 785 87 396">{t('impressum.phone')}: <span class="phone-placeholder">{t('contact.clickToReveal')}</span></span><br />
+                            E-Mail: <a href="#" class="protected-email-link" data-user="jonas" data-domain="wilinski.me"><span class="email-text">{t('contact.clickToReveal')}</span></a>
+                        </p>
+
+                        <h3>{t('impressum.disputeResolution')}</h3>
+                        <p>
+                            {t('impressum.disputeText')}
+                        </p>
+
+                        <hr class="my-8 border-neutral-200 dark:border-neutral-700" />
+
+                        <p class="text-sm text-neutral-500 dark:text-neutral-500">
+                            {t('footer.builtWith')} <a href="https://astro.build" target="_blank" rel="noopener noreferrer">Astro</a> & <a href="https://tailwindcss.com" target="_blank" rel="noopener noreferrer">Tailwind CSS</a>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <Footer lang={lang} />
+</Layout>
+
+<script>
+    function initProtection() {
+        // Protect email
+        document.querySelectorAll('.protected-email-link').forEach((el) => {
+            const element = el as HTMLAnchorElement;
+            const user = element.dataset.user;
+            const domain = element.dataset.domain;
+            if (user && domain) {
+                const email = `${user}@${domain}`;
+                element.href = `mailto:${email}`;
+                const text = element.querySelector('.email-text');
+                if (text) text.textContent = email;
+            }
+        });
+
+        // Protect phone
+        document.querySelectorAll('.protected-phone').forEach((el) => {
+            const element = el as HTMLElement;
+            const phone = element.dataset.phone;
+            if (phone) {
+                const placeholder = element.querySelector('.phone-placeholder');
+                if (placeholder) placeholder.textContent = phone;
+            }
+        });
+    }
+
+    initProtection();
+    document.addEventListener('astro:page-load', initProtection);
+</script>

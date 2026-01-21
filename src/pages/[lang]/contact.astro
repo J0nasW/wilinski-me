@@ -1,0 +1,216 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Footer from '../../components/Footer.astro';
+import Button from '../../components/ui/Button.astro';
+import Badge from '../../components/ui/Badge.astro';
+import { languages, useTranslations, type Lang } from '../../i18n/index';
+
+export function getStaticPaths() {
+    return Object.keys(languages).map((lang) => ({
+        params: { lang },
+    }));
+}
+
+const { lang } = Astro.params as { lang: Lang };
+const t = useTranslations(lang);
+---
+
+<Layout title={`${t('contact.label')} - Jonas Wilinski`} lang={lang}>
+    <main class="pt-24 pb-16">
+        <!-- Header -->
+        <section class="px-6 md:px-8 mb-12 md:mb-16">
+            <div class="max-w-4xl mx-auto text-center">
+                <div data-reveal>
+                    <span class="text-xs font-bold uppercase tracking-wider text-accent mb-2 block">
+                        {t('contact.label')}
+                    </span>
+                    <h1 class="font-display font-bold text-4xl md:text-5xl lg:text-6xl text-neutral-900 dark:text-white mb-4">
+                        {t('contact.title')}
+                    </h1>
+                    <p class="text-lg text-neutral-600 dark:text-neutral-400 max-w-xl mx-auto">
+                        {t('contact.description')}
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Options -->
+        <section class="px-6 md:px-8 mb-16">
+            <div class="max-w-4xl mx-auto">
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Email Card -->
+                    <div class="p-8 rounded-3xl bg-gradient-to-br from-accent to-cyan-500 text-white" data-reveal style="--stagger-index: 0;">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                </svg>
+                            </div>
+                            <span class="text-sm font-bold uppercase tracking-wider text-white/80">
+                                {t('contact.email')}
+                            </span>
+                        </div>
+                        <a
+                            href="#"
+                            class="block font-display font-bold text-2xl md:text-3xl break-all hover:underline protected-email"
+                            data-user="jonas"
+                            data-domain="wilinski.me"
+                        >
+                            <span class="email-placeholder">{t('contact.clickToReveal')}</span>
+                        </a>
+                        <p class="mt-4 text-white/70">
+                            {t('contact.emailDescription')}
+                        </p>
+                    </div>
+
+                    <!-- Location Card -->
+                    <div class="p-8 rounded-3xl bg-neutral-100 dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700" data-reveal style="--stagger-index: 1;">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-12 h-12 rounded-full bg-neutral-200 dark:bg-neutral-700 flex items-center justify-center">
+                                <svg class="w-6 h-6 text-neutral-600 dark:text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
+                            </div>
+                            <span class="text-sm font-bold uppercase tracking-wider text-neutral-500 dark:text-neutral-400">
+                                {t('contact.location')}
+                            </span>
+                        </div>
+                        <p class="font-display font-bold text-2xl text-neutral-900 dark:text-white mb-2">
+                            {t('featured.locationCity')}
+                        </p>
+                        <div class="flex items-center gap-2 text-neutral-500 dark:text-neutral-400">
+                            <div class="relative">
+                                <span class="absolute inline-flex h-3 w-3 rounded-full bg-emerald-500 opacity-75 animate-ping"></span>
+                                <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+                            </div>
+                            <span>{t('contact.availableRemote')}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Social Links -->
+        <section class="px-6 md:px-8 mb-16">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="font-display font-bold text-xl text-neutral-900 dark:text-white mb-6 text-center" data-reveal>
+                    {t('contact.findMeOn')}
+                </h2>
+
+                <div class="flex flex-wrap justify-center gap-4" data-reveal>
+                    <a
+                        href="https://linkedin.com/in/jonas-wilinski"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="flex items-center gap-3 px-6 py-4 rounded-2xl bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 hover:border-accent/50 hover:shadow-lg transition-all group"
+                    >
+                        <svg class="w-6 h-6 text-neutral-600 dark:text-neutral-400 group-hover:text-[#0A66C2] transition-colors" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                        </svg>
+                        <span class="font-medium text-neutral-900 dark:text-white">LinkedIn</span>
+                    </a>
+
+                    <a
+                        href="https://github.com/StartYourTime"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="flex items-center gap-3 px-6 py-4 rounded-2xl bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 hover:border-accent/50 hover:shadow-lg transition-all group"
+                    >
+                        <svg class="w-6 h-6 text-neutral-600 dark:text-neutral-400 group-hover:text-neutral-900 dark:group-hover:text-white transition-colors" fill="currentColor" viewBox="0 0 24 24">
+                            <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" />
+                        </svg>
+                        <span class="font-medium text-neutral-900 dark:text-white">GitHub</span>
+                    </a>
+
+                    <a
+                        href="https://twitter.com/jonaswilinski"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="flex items-center gap-3 px-6 py-4 rounded-2xl bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 hover:border-accent/50 hover:shadow-lg transition-all group"
+                    >
+                        <svg class="w-6 h-6 text-neutral-600 dark:text-neutral-400 group-hover:text-neutral-900 dark:group-hover:text-white transition-colors" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                        </svg>
+                        <span class="font-medium text-neutral-900 dark:text-white">Twitter / X</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="px-6 md:px-8">
+            <div class="max-w-4xl mx-auto">
+                <div class="relative p-8 md:p-12 rounded-3xl bg-neutral-900 dark:bg-neutral-950 text-center overflow-hidden" data-reveal>
+                    <!-- Decorative -->
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-accent rounded-full blur-[150px] opacity-20"></div>
+
+                    <div class="relative z-10">
+                        <h3 class="font-display font-bold text-2xl md:text-3xl text-white mb-4">
+                            {t('contact.startProject')}
+                        </h3>
+                        <p class="text-neutral-400 mb-8 max-w-lg mx-auto">
+                            {t('contact.startProjectText')}
+                        </p>
+                        <button
+                            type="button"
+                            class="protected-email-btn inline-flex items-center gap-2 px-6 py-3 bg-accent text-white rounded-full font-medium hover:bg-accent-600 transition-colors"
+                            data-user="jonas"
+                            data-domain="wilinski.me"
+                        >
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
+                            {t('contact.sendMeEmail')}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <Footer lang={lang} />
+</Layout>
+
+<script>
+    // Email protection - decode and display emails only via JavaScript
+    function decodeEmail(user: string, domain: string): string {
+        return `${user}@${domain}`;
+    }
+
+    function initEmailProtection() {
+        // Handle email links
+        document.querySelectorAll('.protected-email').forEach((el) => {
+            const element = el as HTMLAnchorElement;
+            const user = element.dataset.user;
+            const domain = element.dataset.domain;
+            if (user && domain) {
+                const email = decodeEmail(user, domain);
+                element.href = `mailto:${email}`;
+                const placeholder = element.querySelector('.email-placeholder');
+                if (placeholder) {
+                    placeholder.textContent = email;
+                }
+            }
+        });
+
+        // Handle email buttons
+        document.querySelectorAll('.protected-email-btn').forEach((el) => {
+            const element = el as HTMLButtonElement;
+            const user = element.dataset.user;
+            const domain = element.dataset.domain;
+            if (user && domain) {
+                element.addEventListener('click', () => {
+                    const email = decodeEmail(user, domain);
+                    window.location.href = `mailto:${email}`;
+                });
+            }
+        });
+    }
+
+    // Run on initial load
+    initEmailProtection();
+
+    // Run on Astro page transitions
+    document.addEventListener('astro:page-load', initEmailProtection);
+</script>

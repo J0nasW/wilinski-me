@@ -1,0 +1,108 @@
+---
+import '../styles/global.css';
+import Navigation from '../components/layout/Navigation.astro';
+import { languages, defaultLang, type Lang } from '../i18n/index';
+import { getAlternateLanguagePath } from '../i18n/utils';
+
+interface Props {
+    title?: string;
+    description?: string;
+    lang?: Lang;
+}
+
+const {
+    title = 'Jonas Wilinski',
+    description = 'Researcher, Developer, and Founder - Building the future with AI and modern web technologies.',
+    lang = defaultLang
+} = Astro.props;
+
+const currentPath = Astro.url.pathname;
+const alternateLinks = Object.keys(languages).map((l) => ({
+    lang: l,
+    href: new URL(getAlternateLanguagePath(currentPath, lang, l as Lang), Astro.site || Astro.url.origin).href,
+}));
+---
+
+<!doctype html>
+<html lang={lang}>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content={description} />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta name="generator" content={Astro.generator} />
+        <title>{title}</title>
+
+        <!-- Hreflang tags for SEO -->
+        {alternateLinks.map(({ lang: l, href }) => (
+            <link rel="alternate" hreflang={l} href={href} />
+        ))}
+        <link rel="alternate" hreflang="x-default" href={alternateLinks.find(l => l.lang === 'en')?.href} />
+
+        <!-- Preconnect to Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+        <!-- Load fonts: Outfit (display), Inter (body), Crimson Pro (accent) -->
+        <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400..700;1,400..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+        <!-- KaTeX for math rendering -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+
+        <!-- Theme script - runs before page renders to prevent flash -->
+        <script is:inline>
+            const theme = (() => {
+                if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+                    return localStorage.getItem('theme');
+                }
+                if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    return 'dark';
+                }
+                return 'light';
+            })();
+
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        </script>
+    </head>
+    <body class="min-h-screen bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-50 font-sans antialiased">
+        <Navigation lang={lang} />
+
+        <main>
+            <slot />
+        </main>
+
+        <!-- Scroll reveal observer -->
+        <script>
+            const initRevealObserver = () => {
+                const observer = new IntersectionObserver(
+                    (entries) => {
+                        entries.forEach((entry) => {
+                            if (entry.isIntersecting) {
+                                entry.target.classList.add('revealed');
+                                observer.unobserve(entry.target);
+                            }
+                        });
+                    },
+                    {
+                        threshold: 0.1,
+                        rootMargin: '0px 0px -50px 0px'
+                    }
+                );
+
+                document.querySelectorAll('[data-reveal]').forEach((el) => {
+                    observer.observe(el);
+                });
+            };
+
+            // Run on initial load
+            initRevealObserver();
+
+            // Re-run after Astro page transitions
+            document.addEventListener('astro:page-load', initRevealObserver);
+        </script>
+    </body>
+</html>

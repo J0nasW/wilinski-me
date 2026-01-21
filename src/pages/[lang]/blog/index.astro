@@ -1,0 +1,206 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Footer from '../../../components/Footer.astro';
+import Badge from '../../../components/ui/Badge.astro';
+import { getCollection } from 'astro:content';
+import { languages, useTranslations, type Lang } from '../../../i18n/index';
+import { formatDate, formatShortDate, getLocalizedPath } from '../../../i18n/utils';
+
+export function getStaticPaths() {
+    return Object.keys(languages).map((lang) => ({
+        params: { lang },
+    }));
+}
+
+const { lang } = Astro.params as { lang: Lang };
+const t = useTranslations(lang);
+
+// Get all blog posts and filter by language
+const allPosts = await getCollection('blog');
+const posts = allPosts
+    .filter(post => {
+        // Check if post is in a language-specific folder
+        const pathParts = post.id.split('/');
+        if (pathParts.length > 1 && (pathParts[0] === 'en' || pathParts[0] === 'de')) {
+            return pathParts[0] === lang;
+        }
+        // Posts without language folder show for all languages (legacy support)
+        return true;
+    })
+    .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const featuredPost = posts[0];
+const otherPosts = posts.slice(1);
+
+// Helper to get clean slug without language prefix and .md extension
+function getCleanSlug(id: string): string {
+    const parts = id.split('/');
+    let slug: string;
+    if (parts.length > 1 && (parts[0] === 'en' || parts[0] === 'de')) {
+        slug = parts.slice(1).join('/');
+    } else {
+        slug = id;
+    }
+    return slug.replace(/\.md$/, '');
+}
+---
+
+<Layout title={`${t('blog.label')} - Jonas Wilinski`} lang={lang}>
+    <main class="pt-24 pb-16">
+        <!-- Header -->
+        <section class="px-6 md:px-8 mb-12 md:mb-16">
+            <div class="max-w-6xl mx-auto">
+                <div data-reveal>
+                    <span class="text-xs font-bold uppercase tracking-wider text-accent mb-2 block">
+                        {t('blog.label')}
+                    </span>
+                    <h1 class="font-display font-bold text-4xl md:text-5xl lg:text-6xl text-neutral-900 dark:text-white mb-4">
+                        {t('blog.title')}
+                    </h1>
+                    <p class="text-lg text-neutral-600 dark:text-neutral-400 max-w-2xl">
+                        {t('blog.description')}
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Post -->
+        {featuredPost && (
+            <section class="px-6 md:px-8 mb-12 md:mb-16">
+                <div class="max-w-6xl mx-auto" data-reveal>
+                    <a
+                        href={getLocalizedPath(`/blog/${getCleanSlug(featuredPost.id)}/`, lang)}
+                        class="group relative block rounded-3xl overflow-hidden bg-neutral-100 dark:bg-neutral-800"
+                    >
+                        <!-- Background Image -->
+                        {featuredPost.data.heroImage && (
+                            <div class="absolute inset-0">
+                                <img
+                                    src={featuredPost.data.heroImage}
+                                    alt=""
+                                    class="w-full h-full object-cover opacity-30 group-hover:scale-105 transition-transform duration-700"
+                                />
+                                <div class="absolute inset-0 bg-gradient-to-t from-neutral-900/90 via-neutral-900/50 to-transparent"></div>
+                            </div>
+                        )}
+
+                        <div class="relative p-8 md:p-12 lg:p-16 min-h-[400px] flex flex-col justify-end">
+                            <!-- Badge -->
+                            <Badge variant="accent" size="sm" class="mb-4 w-fit">
+                                {t('blog.featured')}
+                            </Badge>
+
+                            <!-- Meta -->
+                            <div class="flex items-center gap-3 text-sm text-white/70 mb-4">
+                                <time datetime={featuredPost.data.pubDate.toISOString()}>
+                                    {formatDate(featuredPost.data.pubDate, lang)}
+                                </time>
+                                {featuredPost.data.tags && featuredPost.data.tags.length > 0 && (
+                                    <>
+                                        <span class="text-white/40">•</span>
+                                        <span>#{featuredPost.data.tags[0]}</span>
+                                    </>
+                                )}
+                            </div>
+
+                            <!-- Title -->
+                            <h2 class="font-display font-bold text-2xl md:text-3xl lg:text-4xl text-white mb-4 group-hover:text-accent transition-colors">
+                                {featuredPost.data.title}
+                            </h2>
+
+                            <!-- Description -->
+                            <p class="text-base md:text-lg text-white/80 max-w-2xl">
+                                {featuredPost.data.description}
+                            </p>
+
+                            <!-- Read More -->
+                            <div class="mt-6 flex items-center gap-2 text-accent font-medium group-hover:gap-4 transition-all">
+                                {t('blog.readArticle')}
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                </svg>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </section>
+        )}
+
+        <!-- Other Posts Grid -->
+        {otherPosts.length > 0 && (
+            <section class="px-6 md:px-8">
+                <div class="max-w-6xl mx-auto">
+                    <h3 class="font-display font-semibold text-lg text-neutral-500 dark:text-neutral-400 mb-8" data-reveal>
+                        {t('blog.moreArticles')}
+                    </h3>
+
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {otherPosts.map((post, index) => (
+                            <article
+                                class="group relative flex flex-col rounded-2xl border border-neutral-200 dark:border-neutral-800 hover:border-accent/50 bg-white dark:bg-neutral-900 overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-accent/5 hover:-translate-y-1"
+                                data-reveal
+                                style={`--stagger-index: ${index}`}
+                            >
+                                {post.data.heroImage && (
+                                    <div class="relative h-48 overflow-hidden">
+                                        <img
+                                            src={post.data.heroImage}
+                                            alt=""
+                                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                        />
+                                    </div>
+                                )}
+
+                                <div class="flex-1 flex flex-col p-6">
+                                    <!-- Meta -->
+                                    <div class="flex items-center gap-2 text-sm text-neutral-500 dark:text-neutral-400 mb-3">
+                                        <time datetime={post.data.pubDate.toISOString()}>
+                                            {formatShortDate(post.data.pubDate, lang)}
+                                        </time>
+                                    </div>
+
+                                    <!-- Title -->
+                                    <h2 class="font-display font-bold text-xl text-neutral-900 dark:text-white group-hover:text-accent transition-colors mb-3">
+                                        <a href={getLocalizedPath(`/blog/${getCleanSlug(post.id)}/`, lang)}>
+                                            <span class="absolute inset-0"></span>
+                                            {post.data.title}
+                                        </a>
+                                    </h2>
+
+                                    <!-- Description -->
+                                    <p class="text-neutral-600 dark:text-neutral-400 line-clamp-3 flex-1">
+                                        {post.data.description}
+                                    </p>
+
+                                    <!-- Tags -->
+                                    {post.data.tags && post.data.tags.length > 0 && (
+                                        <div class="flex flex-wrap gap-2 mt-4">
+                                            {post.data.tags.slice(0, 3).map(tag => (
+                                                <Badge variant="outline" size="sm">
+                                                    #{tag}
+                                                </Badge>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+                            </article>
+                        ))}
+                    </div>
+                </div>
+            </section>
+        )}
+
+        <!-- Empty State -->
+        {posts.length === 0 && (
+            <section class="px-6 md:px-8 py-20">
+                <div class="max-w-6xl mx-auto text-center">
+                    <p class="text-neutral-500 dark:text-neutral-400">
+                        {t('blog.noPosts')}
+                    </p>
+                </div>
+            </section>
+        )}
+    </main>
+
+    <Footer lang={lang} />
+</Layout>

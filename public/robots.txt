@@ -1,0 +1,23 @@
+# Robots.txt for wilinski.me
+
+User-agent: *
+Allow: /
+
+# Block email harvesting bots
+User-agent: EmailCollector
+Disallow: /
+
+User-agent: EmailSiphon
+Disallow: /
+
+User-agent: WebBandit
+Disallow: /
+
+User-agent: EmailWolf
+Disallow: /
+
+User-agent: ExtractorPro
+Disallow: /
+
+# Sitemap
+Sitemap: https://wilinski.me/sitemap.xml

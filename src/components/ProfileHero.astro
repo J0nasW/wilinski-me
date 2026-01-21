@@ -1,0 +1,42 @@
+---
+const profileImage = '/assets/img/steingy.jpg';
+---
+
+<div class="relative w-full h-full flex flex-col md:flex-row items-center gap-6 md:gap-8">
+  <div class="relative w-32 h-32 md:w-48 md:h-48 flex-shrink-0">
+    <div class="hidden dark:block absolute inset-0 bg-gradient-to-tr from-blue-600 to-indigo-600 rounded-full blur-2xl opacity-40 animate-pulse-slow"></div>
+    <img 
+      src={profileImage} 
+      alt="Jonas Wilinski" 
+      class="w-full h-full object-cover rounded-full border-4 border-white dark:border-slate-800 shadow-xl relative z-10"
+    />
+  </div>
+  
+  <div class="flex-1 text-center md:text-left">
+    <div class="inline-flex items-center gap-2 px-3 py-1 mb-4 rounded-full bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 text-xs font-bold border border-emerald-100 dark:border-emerald-800">
+      <span class="relative flex h-2 w-2">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+      </span>
+      Available for Opportunities
+    </div>
+    
+    <h1 class="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-slate-900 dark:text-white mb-4 leading-tight">
+      Hi, I'm Jonas.
+    </h1>
+    <p class="text-lg text-slate-600 dark:text-slate-300 leading-relaxed font-sans max-w-xl">
+      PhD Researcher at <span class="text-slate-900 dark:text-white font-semibold">TU Hamburg</span> & Founder at <span class="text-blue-600 font-semibold">Reforge Labs</span>.
+      <br class="hidden md:block" />
+      Bridging <span class="italic font-serif">Deep Tech</span> research with real-world impact.
+    </p>
+    
+    <div class="flex flex-wrap gap-3 mt-6 justify-center md:justify-start">
+       <a href="/cv" class="px-5 py-2.5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-full font-bold text-sm hover:shadow-lg hover:-translate-y-0.5 transition-all">
+         View Experience
+       </a>
+       <a href="/contact" class="px-5 py-2.5 bg-white dark:bg-slate-800 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 rounded-full font-bold text-sm hover:border-blue-500 dark:hover:border-blue-500 hover:-translate-y-0.5 transition-all">
+         Contact Me
+       </a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,124 @@
+---
+import ThemeToggle from '../ThemeToggle.astro';
+import FullScreenMenu from './FullScreenMenu.astro';
+import LanguageSwitcher from '../LanguageSwitcher.astro';
+import { defaultLang, type Lang } from '../../i18n/index';
+import { getLocalizedPath } from '../../i18n/utils';
+
+interface Props {
+    lang?: Lang;
+}
+
+const { lang = defaultLang } = Astro.props;
+const currentPath = Astro.url.pathname;
+---
+
+<!-- Fixed Top Navigation Bar -->
+<header class="fixed top-0 left-0 right-0 z-40 px-6 py-4 md:px-8 md:py-6">
+    <nav class="max-w-7xl mx-auto flex items-center justify-between">
+        <!-- Logo / Name -->
+        <a
+            href={getLocalizedPath('/', lang)}
+            class="relative group"
+        >
+            <span class="font-display font-bold text-xl md:text-2xl text-neutral-900 dark:text-white transition-colors group-hover:text-accent">
+                JW
+            </span>
+            <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
+        </a>
+
+        <!-- Right Side Actions -->
+        <div class="flex items-center gap-2 md:gap-4">
+            <!-- Language Switcher -->
+            <LanguageSwitcher lang={lang} class="hidden md:flex" />
+
+            <!-- Theme Toggle -->
+            <ThemeToggle />
+
+            <!-- Menu Button -->
+            <button
+                id="menu-toggle"
+                class="relative z-50 flex items-center justify-center w-12 h-12 rounded-full bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors"
+                aria-label="Toggle menu"
+                aria-expanded="false"
+            >
+                <div class="menu-icon flex flex-col gap-1.5 w-5">
+                    <span class="block h-0.5 w-full bg-neutral-900 dark:bg-white transition-all duration-300 origin-center"></span>
+                    <span class="block h-0.5 w-full bg-neutral-900 dark:bg-white transition-all duration-300"></span>
+                    <span class="block h-0.5 w-3 bg-neutral-900 dark:bg-white transition-all duration-300 origin-center"></span>
+                </div>
+            </button>
+        </div>
+    </nav>
+</header>
+
+<!-- Full Screen Menu Overlay -->
+<FullScreenMenu currentPath={currentPath} lang={lang} />
+
+<style>
+    /* Menu icon animation when open */
+    .menu-open .menu-icon span:first-child {
+        transform: translateY(8px) rotate(45deg);
+    }
+
+    .menu-open .menu-icon span:nth-child(2) {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+
+    .menu-open .menu-icon span:last-child {
+        width: 100%;
+        transform: translateY(-8px) rotate(-45deg);
+    }
+</style>
+
+<script>
+    const initMenu = () => {
+        const menuToggle = document.getElementById('menu-toggle');
+        const menuOverlay = document.getElementById('menu-overlay');
+
+        if (!menuToggle || !menuOverlay) return;
+
+        const toggleMenu = () => {
+            const isOpen = menuOverlay.classList.contains('open');
+
+            if (isOpen) {
+                // Close menu
+                menuOverlay.classList.remove('open');
+                menuToggle.classList.remove('menu-open');
+                menuToggle.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = '';
+            } else {
+                // Open menu
+                menuOverlay.classList.add('open');
+                menuToggle.classList.add('menu-open');
+                menuToggle.setAttribute('aria-expanded', 'true');
+                document.body.style.overflow = 'hidden';
+            }
+        };
+
+        // Toggle on button click
+        menuToggle.addEventListener('click', toggleMenu);
+
+        // Close on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && menuOverlay.classList.contains('open')) {
+                toggleMenu();
+            }
+        });
+
+        // Close when clicking a nav link
+        const navLinks = menuOverlay.querySelectorAll('a');
+        navLinks.forEach((link) => {
+            link.addEventListener('click', () => {
+                setTimeout(toggleMenu, 100);
+            });
+        });
+    };
+
+    // Initialize on page load
+    initMenu();
+
+    // Re-initialize after Astro page transitions
+    document.addEventListener('astro:page-load', initMenu);
+</script>

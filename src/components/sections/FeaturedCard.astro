@@ -1,0 +1,120 @@
+---
+import { defaultLang, useTranslations, type Lang } from '../../i18n/index';
+
+interface Props {
+    title: string;
+    subtitle?: string;
+    description?: string;
+    href?: string;
+    variant?: 'default' | 'accent' | 'dark';
+    size?: 'normal' | 'large';
+    class?: string;
+    external?: boolean;
+    lang?: Lang;
+}
+
+const {
+    title,
+    subtitle,
+    description,
+    href,
+    variant = 'default',
+    size = 'normal',
+    class: className = '',
+    external = false,
+    lang = defaultLang,
+} = Astro.props;
+
+const t = useTranslations(lang);
+
+const Element = href ? 'a' : 'div';
+
+const baseStyles = 'group relative flex flex-col h-full p-6 md:p-8 rounded-3xl transition-all duration-500 ease-out-expo overflow-hidden';
+
+const variants = {
+    default: 'bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700/50 hover:border-accent/50 hover:shadow-xl hover:shadow-accent/5',
+    accent: 'bg-gradient-to-br from-accent to-cyan-500 text-white border-none hover:shadow-xl hover:shadow-accent/20',
+    dark: 'bg-neutral-900 dark:bg-neutral-950 text-white border border-neutral-800 hover:border-neutral-700 hover:shadow-xl',
+};
+
+const sizes = {
+    normal: 'min-h-[200px]',
+    large: 'min-h-[280px] md:min-h-[320px]',
+};
+
+const classes = `${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`;
+---
+
+{href ? (
+    <a
+        href={href}
+        class={classes}
+        target={external ? '_blank' : undefined}
+        rel={external ? 'noopener noreferrer' : undefined}
+    >
+        <!-- Hover Gradient Overlay -->
+        <div class="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+        <div class="relative z-10 flex flex-col h-full">
+            {subtitle && (
+                <span class:list={[
+                    'text-xs font-bold uppercase tracking-wider mb-2',
+                    variant === 'default' ? 'text-accent' : 'text-white/70'
+                ]}>
+                    {subtitle}
+                </span>
+            )}
+
+            <h3 class:list={[
+                'font-display font-bold text-xl md:text-2xl mb-3 transition-colors duration-300',
+                variant === 'default' ? 'text-neutral-900 dark:text-white group-hover:text-accent' : 'text-white'
+            ]}>
+                {title}
+            </h3>
+
+            {description && (
+                <p class:list={[
+                    'text-sm md:text-base flex-grow',
+                    variant === 'default' ? 'text-neutral-600 dark:text-neutral-400' : 'text-white/80'
+                ]}>
+                    {description}
+                </p>
+            )}
+
+            <slot />
+
+            <!-- Arrow Icon -->
+            <div class:list={[
+                'mt-4 flex items-center gap-2 text-sm font-medium transition-all duration-300 group-hover:gap-4',
+                variant === 'default' ? 'text-accent' : 'text-white'
+            ]}>
+                {external ? t('featured.visit') : t('featured.explore')}
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+            </div>
+        </div>
+    </a>
+) : (
+    <div class={classes}>
+        <div class="relative z-10 flex flex-col h-full">
+            {subtitle && (
+                <span class="text-xs font-bold uppercase tracking-wider mb-2 text-accent">
+                    {subtitle}
+                </span>
+            )}
+
+            <h3 class="font-display font-bold text-xl md:text-2xl mb-3 text-neutral-900 dark:text-white">
+                {title}
+            </h3>
+
+            {description && (
+                <p class="text-sm md:text-base text-neutral-600 dark:text-neutral-400 flex-grow">
+                    {description}
+                </p>
+            )}
+
+            <slot />
+        </div>
+    </div>
+)}

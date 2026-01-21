@@ -1,0 +1,68 @@
+---
+interface Props {
+    type: 'unsplash' | 'ai' | 'custom';
+    /** For unsplash: photographer name. For custom: your label text */
+    label?: string;
+    /** Link to the original source (e.g., Unsplash photo URL) */
+    href?: string;
+    /** Position of the label on the image */
+    position?: 'bottom-left' | 'bottom-right' | 'top-left' | 'top-right';
+    /** AI model used (for ai type) */
+    model?: string;
+}
+
+const {
+    type,
+    label,
+    href,
+    position = 'bottom-right',
+    model,
+} = Astro.props;
+
+const positionClasses = {
+    'bottom-left': 'bottom-3 left-3',
+    'bottom-right': 'bottom-3 right-3',
+    'top-left': 'top-3 left-3',
+    'top-right': 'top-3 right-3',
+};
+
+const baseClasses = `absolute ${positionClasses[position]} z-10 flex items-center gap-1.5 px-2 py-1 rounded-md text-[10px] font-medium backdrop-blur-sm transition-opacity opacity-60 hover:opacity-100`;
+
+const typeStyles = {
+    unsplash: 'bg-black/40 text-white/90 hover:bg-black/60',
+    ai: 'bg-purple-900/40 text-purple-100/90 border border-purple-500/20',
+    custom: 'bg-black/40 text-white/90',
+};
+---
+
+{type === 'unsplash' && href ? (
+    <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        class={`${baseClasses} ${typeStyles.unsplash}`}
+        title={`Photo by ${label} on Unsplash`}
+    >
+        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M7.5 6.75V0h9v6.75h-9zm9 3.75H24V24H0V10.5h7.5v6.75h9V10.5z"/>
+        </svg>
+        <span>{label || 'Unsplash'}</span>
+    </a>
+) : type === 'ai' ? (
+    <span class={`${baseClasses} ${typeStyles.ai}`} title="This image was generated using AI">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+        </svg>
+        <span>AI Generated{model ? ` (${model})` : ''}</span>
+    </span>
+) : (
+    <span class={`${baseClasses} ${typeStyles.custom}`}>
+        {href ? (
+            <a href={href} target="_blank" rel="noopener noreferrer" class="hover:underline">
+                {label || 'Source'}
+            </a>
+        ) : (
+            <span>{label || 'Image'}</span>
+        )}
+    </span>
+)}

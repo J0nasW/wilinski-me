@@ -1,0 +1,67 @@
+---
+interface Props {
+    items: string[];
+    speed?: 'slow' | 'normal' | 'fast';
+    direction?: 'left' | 'right';
+    class?: string;
+}
+
+const {
+    items,
+    speed = 'normal',
+    direction = 'left',
+    class: className = '',
+} = Astro.props;
+
+const speeds = {
+    slow: '60s',
+    normal: '40s',
+    fast: '25s',
+};
+
+// Duplicate items for seamless loop
+const duplicatedItems = [...items, ...items];
+---
+
+<div class={`relative overflow-hidden py-6 ${className}`}>
+    <!-- Fade edges -->
+    <div class="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-white dark:from-neutral-900 to-transparent z-10"></div>
+    <div class="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-white dark:from-neutral-900 to-transparent z-10"></div>
+
+    <!-- Marquee track -->
+    <div
+        class="flex gap-6 whitespace-nowrap"
+        style={`animation: ${direction === 'left' ? 'marquee' : 'marqueeReverse'} ${speeds[speed]} linear infinite;`}
+    >
+        {duplicatedItems.map((item) => (
+            <span class="flex items-center gap-3 px-5 py-3 bg-neutral-100 dark:bg-neutral-800 rounded-full text-sm md:text-base font-medium text-neutral-700 dark:text-neutral-300 border border-neutral-200 dark:border-neutral-700 hover:border-accent hover:text-accent transition-colors cursor-default">
+                {item}
+            </span>
+        ))}
+    </div>
+</div>
+
+<style>
+    @keyframes marquee {
+        from {
+            transform: translateX(0);
+        }
+        to {
+            transform: translateX(-50%);
+        }
+    }
+
+    @keyframes marqueeReverse {
+        from {
+            transform: translateX(-50%);
+        }
+        to {
+            transform: translateX(0);
+        }
+    }
+
+    /* Pause on hover */
+    .overflow-hidden:hover > div {
+        animation-play-state: paused;
+    }
+</style>

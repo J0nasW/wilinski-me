@@ -1,0 +1,59 @@
+---
+import ImageLabel from './ImageLabel.astro';
+
+interface Props {
+    src: string;
+    alt: string;
+    /** Attribution type */
+    attribution: 'unsplash' | 'ai' | 'custom' | 'none';
+    /** For unsplash: photographer name. For custom: your label text */
+    credit?: string;
+    /** Link to the original source */
+    creditLink?: string;
+    /** AI model used (for ai attribution) */
+    model?: string;
+    /** Position of the label */
+    labelPosition?: 'bottom-left' | 'bottom-right' | 'top-left' | 'top-right';
+    /** Optional caption below the image */
+    caption?: string;
+    /** Additional classes for the image */
+    class?: string;
+}
+
+const {
+    src,
+    alt,
+    attribution,
+    credit,
+    creditLink,
+    model,
+    labelPosition = 'bottom-right',
+    caption,
+    class: className = '',
+} = Astro.props;
+---
+
+<figure class="relative my-10 md:my-14">
+    <div class="relative overflow-hidden rounded-2xl">
+        <img
+            src={src}
+            alt={alt}
+            class={`w-full h-auto ${className}`}
+            loading="lazy"
+        />
+        {attribution !== 'none' && (
+            <ImageLabel
+                type={attribution}
+                label={credit}
+                href={creditLink}
+                model={model}
+                position={labelPosition}
+            />
+        )}
+    </div>
+    {caption && (
+        <figcaption class="mt-4 text-center text-sm text-neutral-500 dark:text-neutral-400">
+            {caption}
+        </figcaption>
+    )}
+</figure>
