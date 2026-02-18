@@ -1,7 +1,7 @@
 ---
 title: 'Imagine having all of science in one place...'
 description: 'Quite a hard challenge - but I managed to create a datalake featuring x-ref sources from OpenAlex, Semantic Scholar, SciSciNet and others alongside with merged Ontologies and more.'
-pubDate: '2023-02-13'
+pubDate: '2026-02-13'
 heroImage: '/assets/img/title_img/bg04-unsplash.jpg'
 heroImageAttribution: 'unsplash'
 heroImageCredit: 'BoliviaInteligente'
