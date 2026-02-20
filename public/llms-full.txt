@@ -1,0 +1,94 @@
+# Jonas Wilinski — Full Profile
+
+## Bio
+
+Jonas Wilinski is a PhD candidate at the Hamburg University of Technology (TUHH), Institute of Entrepreneurship, where he researches the diffusion of AI concepts across the global scientific landscape using Natural Language Processing and Large Language Models. He holds an M.Sc. in International Industrial Engineering from TU Hamburg and a B.Sc. in Electrical Engineering & IT from Kiel University. His professional experience includes roles as CTO at Cargofaces (supply chain startup), Coordinator for Processes & Digitalization at Porsche AG, and freelance IT consulting. His tech stack spans Python, PyTorch, LangChain, React, Next.js, and cloud platforms (AWS, GCP).
+
+## Work Experience
+
+### Researcher & PhD Candidate — Institute of Entrepreneurship, TU Hamburg
+*Present*
+- Researching the diffusion of AI concepts across the global scientific landscape
+- Focus areas: NLP, LLMs, Science of Science, Knowledge Graphs, Concept Extraction
+- Dissertation: "The AI Innovation Compass — Tracking the Diffusion of AI across the Scientific Landscape"
+
+### IT Consultant (Freelance)
+*2014 – Present*
+- Freelance IT consulting and web development
+- Full-stack development, cloud infrastructure, data engineering
+
+### Chief Technical Officer (CTO) — Cargofaces
+*11.2021 – 11.2022*
+- Led technical development of a supply chain logistics startup
+- Built and managed the engineering team and product architecture
+
+### Coordinator Processes & Digitalization — Porsche AG
+*10.2018 – 09.2019*
+- Coordinated digital transformation processes
+- Worked on process optimization and digitalization strategy
+
+### Head of IT & Dev-Ops — Ecomap Global gGmbH (Voluntary)
+*07.2020 – 02.2022*
+- Led IT infrastructure and development operations
+
+## Education
+
+### Ph.D. — Hamburg University of Technology (TU Hamburg)
+*Present*
+- Institute of Entrepreneurship
+- Focus: NLP, LLMs, Science of Science, Knowledge Graphs, Concept Extraction
+
+### M.Sc. International Industrial Engineering — TU Hamburg
+*10.2019 – 09.2021*
+- Master Thesis: "Design and implementation of a blockchain-based asset tracking service" (Grade: 1.0)
+
+### B.Sc. Electrical Engineering & IT — Kiel University
+*10.2014 – 09.2018*
+- Bachelor Thesis: "Reinforcement Learning on biological neural networks for dynamic systems control" (Grade: 1.0)
+
+## Publications
+
+### The AI Innovation Compass: Constructing Semantic Networks from AI Concepts to Identify and Measure Technology Innovation
+- **Venue:** DRUID Conference, 2024
+- **Author:** Jonas Wilinski
+- **Summary:** Develops an AI Concept List derived from an unsupervised pipeline to track AI diffusion as a General Purpose Technology across 19 research domains. Uses semantic networks built from 10,000+ AI terms to measure adoption patterns across scientific disciplines. Validates the approach with logistic regression against established classification systems.
+- **PDF:** https://wilinski.me/assets/pdf/druid_paper_2024_jw.pdf
+
+### Attention-Based Concept Mining and Community Detection in AI Research
+- **Venue:** Academy of Management Annual Meeting, 2025
+- **Author:** Jonas Wilinski
+- **Summary:** Proposes a framework merging attention-based concept mining with co-authorship network analysis. Uses transformer attention maps to mine AI concepts from over 500,000 papers sourced from PapersWithCode. Analyzes concept diffusion across research communities and co-authorship networks.
+- **PDF:** https://wilinski.me/assets/pdf/aom_poster_2025_jw.pdf
+
+## Blog Posts
+
+### Back to Academia: A PhD at the Intersection of CS and Science of Science
+*2022-12-21*
+Introduction to the PhD journey at TUHH, exploring how AI concepts diffuse across the global scientific landscape using NLP and Large Language Models.
+
+### First Months: Engineering as Productive Procrastination
+*2023-02-13*
+Reflections on the first months of the PhD, including the development of PubCrawl — a tool for downloading and processing scientific papers at scale.
+
+### Architecting for Scale: Hybrid Workflows between Workstation and HPC
+*2024-06-08*
+Technical deep-dive into building a hybrid infrastructure combining a local workstation with the TUHH HPC cluster for large-scale data processing and model training.
+
+### Imagine having all of science in one place...
+*2025-02-13*
+Exploring the vision and technical challenges of building a comprehensive science datalake aggregating publications from multiple sources.
+
+## Tech Stack
+
+Python, PyTorch, Transformers, LangChain, RAG, React, Next.js, Astro, Node.js, Docker, AWS, Google Cloud, PostgreSQL, Graph Databases, Vector Databases
+
+## Contact
+
+- **Location:** Hamburg, Germany
+- **Website:** https://wilinski.me
+- **LinkedIn:** https://www.linkedin.com/in/jonas-wilinski-a31a35143/
+- **GitHub:** https://github.com/J0nasW
+- **ORCID:** https://orcid.org/0009-0005-4672-7197
+- **HuggingFace:** https://huggingface.co/J0nasW
+- **X / Twitter:** https://x.com/Jonas_H_W
+- **Bluesky:** https://bsky.app/profile/jonashw.bsky.social

@@ -111,6 +111,14 @@
   "impressum.disputeResolution": "Verbraucherstreitbeilegung/Universalschlichtungsstelle",
   "impressum.disputeText": "Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.",
 
+  "about.label": "Über mich",
+  "about.title": "Über mich",
+  "about.text": "Jonas Wilinski ist Doktorand an der Technischen Universität Hamburg (TUHH), Institut für Entrepreneurship, wo er die Diffusion von KI-Konzepten in der globalen Wissenschaftslandschaft mit Methoden der Computerlinguistik und großen Sprachmodellen erforscht. Er hat einen M.Sc. in Internationales Wirtschaftsingenieurwesen von der TU Hamburg und einen B.Sc. in Elektrotechnik & Informationstechnik von der Universität Kiel. Seine Berufserfahrung umfasst Positionen als CTO bei Cargofaces (Supply-Chain-Startup), Koordinator für Prozesse & Digitalisierung bei der Porsche AG sowie freiberufliche IT-Beratung. Sein Tech-Stack umfasst Python, PyTorch, LangChain, React, Next.js und Cloud-Plattformen (AWS, GCP).",
+  "about.textIntro": "Jonas Wilinski ist Doktorand an der Technischen Universität Hamburg (TUHH), Institut für Entrepreneurship, wo er die Diffusion von KI-Konzepten in der globalen Wissenschaftslandschaft mit Methoden der Computerlinguistik und großen Sprachmodellen erforscht. Mehr über seinen Werdegang auf seiner",
+  "about.linkCV": "Erfahrungsseite",
+  "about.textMid": ". Er hat einen M.Sc. in Internationales Wirtschaftsingenieurwesen von der TU Hamburg und einen B.Sc. in Elektrotechnik & Informationstechnik von der Universität Kiel. Entdecken Sie seine",
+  "about.linkPublications": "Forschungspublikationen",
+  "about.textEnd": " für seine akademischen Beiträge. Seine Berufserfahrung umfasst Positionen als CTO bei Cargofaces (Supply-Chain-Startup), Koordinator für Prozesse & Digitalisierung bei der Porsche AG sowie freiberufliche IT-Beratung. Sein Tech-Stack umfasst Python, PyTorch, LangChain, React, Next.js und Cloud-Plattformen (AWS, GCP).",
   "lang.switch": "Sprache wechseln",
   "lang.en": "English",
   "lang.de": "Deutsch"

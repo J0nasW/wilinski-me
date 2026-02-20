@@ -3,6 +3,19 @@
 User-agent: *
 Allow: /
 
+# AI Crawlers - explicitly welcome
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
 # Block email harvesting bots
 User-agent: EmailCollector
 Disallow: /
@@ -20,4 +33,4 @@ User-agent: ExtractorPro
 Disallow: /
 
 # Sitemap
-Sitemap: https://wilinski.me/sitemap.xml
+Sitemap: https://wilinski.me/sitemap-index.xml

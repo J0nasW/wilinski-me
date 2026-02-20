@@ -74,7 +74,34 @@ function getCleanSlug(id: string): string {
 }
 ---
 
-<Layout title={`${post.data.title} - Jonas Wilinski`} lang={lang}>
+<Layout title={`${post.data.title} | Jonas Wilinski`} description={post.data.description} image={post.data.heroImage} type="article" lang={lang}>
+    <!-- Article JSON-LD -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": post.data.title,
+        "description": post.data.description,
+        "image": post.data.heroImage ? new URL(post.data.heroImage, "https://wilinski.me").href : undefined,
+        "datePublished": post.data.pubDate.toISOString(),
+        "dateModified": (post.data.updatedDate || post.data.pubDate).toISOString(),
+        "author": {
+            "@type": "Person",
+            "name": "Jonas Wilinski",
+            "url": "https://wilinski.me"
+        }
+    })} />
+
+    <!-- BreadcrumbList JSON-LD -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": `https://wilinski.me/${lang}` },
+            { "@type": "ListItem", "position": 2, "name": "Blog", "item": `https://wilinski.me/${lang}/blog` },
+            { "@type": "ListItem", "position": 3, "name": post.data.title }
+        ]
+    })} />
+
     <!-- Scroll Indicator - Right Side -->
     <div id="scroll-indicator" class="fixed right-6 top-1/2 -translate-y-1/2 z-40 hidden lg:flex flex-col items-center gap-3 opacity-0 transition-opacity duration-300">
         <div class="relative h-32 w-1 bg-neutral-200 dark:bg-neutral-700 rounded-full overflow-hidden">

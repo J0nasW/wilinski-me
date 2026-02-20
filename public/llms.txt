@@ -1,0 +1,34 @@
+# Jonas Wilinski
+
+> PhD candidate at Hamburg University of Technology (TUHH), researching AI diffusion across the scientific landscape using NLP and Large Language Models. Developer and founder with experience in modern web technologies and cloud platforms.
+
+## Pages
+
+- [Homepage](https://wilinski.me/en/)
+- [Blog](https://wilinski.me/en/blog/)
+- [Publications](https://wilinski.me/en/publications/)
+- [Experience / CV](https://wilinski.me/en/cv/)
+- [Contact](https://wilinski.me/en/contact/)
+
+## Topics
+
+- Natural Language Processing (NLP)
+- Large Language Models (LLMs)
+- Science of Science
+- Knowledge Graphs & Concept Extraction
+- Machine Learning & Deep Learning
+- Web Development (React, Next.js, Astro)
+- Entrepreneurship & Startups
+
+## Profiles
+
+- [LinkedIn](https://www.linkedin.com/in/jonas-wilinski-a31a35143/)
+- [GitHub](https://github.com/J0nasW)
+- [ORCID](https://orcid.org/0009-0005-4672-7197)
+- [HuggingFace](https://huggingface.co/J0nasW)
+- [X / Twitter](https://x.com/Jonas_H_W)
+- [Bluesky](https://bsky.app/profile/jonashw.bsky.social)
+
+## Optional
+
+- [Full content for LLMs](https://wilinski.me/llms-full.txt)

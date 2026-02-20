@@ -8,13 +8,20 @@ interface Props {
     title?: string;
     description?: string;
     lang?: Lang;
+    image?: string;
+    type?: string;
 }
 
 const {
     title = 'Jonas Wilinski',
     description = 'Researcher, Developer, and Founder - Building the future with AI and modern web technologies.',
-    lang = defaultLang
+    lang = defaultLang,
+    image = '/profile.png',
+    type = 'website',
 } = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || Astro.url.origin).href;
+const ogImage = new URL(image, Astro.site || Astro.url.origin).href;
 
 const currentPath = Astro.url.pathname;
 const alternateLinks = Object.keys(languages).map((l) => ({
@@ -29,9 +36,29 @@ const alternateLinks = Object.keys(languages).map((l) => ({
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="description" content={description} />
+        <meta name="author" content="Jonas Wilinski" />
+        <meta name="theme-color" content="#06B6D4" />
+        <meta name="theme-color" content="#171717" media="(prefers-color-scheme: dark)" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <meta name="generator" content={Astro.generator} />
         <title>{title}</title>
+
+        <!-- Canonical URL -->
+        <link rel="canonical" href={canonicalURL} />
+
+        <!-- Open Graph -->
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:image" content={ogImage} />
+        <meta property="og:url" content={canonicalURL} />
+        <meta property="og:type" content={type} />
+        <meta property="og:site_name" content="Jonas Wilinski" />
+
+        <!-- Twitter Card -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
+        <meta name="twitter:image" content={ogImage} />
 
         <!-- Hreflang tags for SEO -->
         {alternateLinks.map(({ lang: l, href }) => (
@@ -48,6 +75,53 @@ const alternateLinks = Object.keys(languages).map((l) => ({
 
         <!-- KaTeX for math rendering -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+
+        <!-- Person JSON-LD -->
+        <script type="application/ld+json" set:html={JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Person",
+            "name": "Jonas Wilinski",
+            "url": "https://wilinski.me",
+            "image": "https://wilinski.me/profile.png",
+            "jobTitle": "PhD Candidate & Developer",
+            "worksFor": {
+                "@type": "Organization",
+                "name": "Hamburg University of Technology (TUHH)",
+                "url": "https://www.tuhh.de"
+            },
+            "alumniOf": [
+                {
+                    "@type": "Organization",
+                    "name": "Hamburg University of Technology (TU Hamburg)"
+                },
+                {
+                    "@type": "Organization",
+                    "name": "Kiel University"
+                }
+            ],
+            "knowsAbout": ["Natural Language Processing", "Large Language Models", "Machine Learning", "Web Development", "Entrepreneurship", "Knowledge Graphs", "Science of Science"],
+            "sameAs": [
+                "https://www.linkedin.com/in/jonas-wilinski-a31a35143/",
+                "https://github.com/J0nasW",
+                "https://x.com/Jonas_H_W",
+                "https://orcid.org/0009-0005-4672-7197",
+                "https://huggingface.co/J0nasW",
+                "https://bsky.app/profile/jonashw.bsky.social"
+            ]
+        })} />
+
+        <!-- SiteNavigationElement JSON-LD -->
+        <script type="application/ld+json" set:html={JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "SiteNavigationElement",
+            "name": ["Blog", "Publications", "Experience", "Contact"],
+            "url": [
+                "https://wilinski.me/en/blog",
+                "https://wilinski.me/en/publications",
+                "https://wilinski.me/en/cv",
+                "https://wilinski.me/en/contact"
+            ]
+        })} />
 
         <!-- Theme script - runs before page renders to prevent flash -->
         <script is:inline>

@@ -65,7 +65,21 @@ const techStack = [
 ];
 ---
 
-<Layout title="Jonas Wilinski - Researcher & Developer" lang={lang}>
+<Layout title="Jonas Wilinski | Researcher, Developer & PhD Candidate" lang={lang}>
+    <!-- WebSite JSON-LD -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Jonas Wilinski",
+        "url": "https://wilinski.me",
+        "description": "Personal website of Jonas Wilinski — PhD candidate, AI/NLP researcher, and developer.",
+        "author": {
+            "@type": "Person",
+            "name": "Jonas Wilinski",
+            "url": "https://wilinski.me"
+        }
+    })} />
+
     <!-- Hero Section -->
     <HeroSection
         name="Jonas Wilinski"
@@ -73,6 +87,21 @@ const techStack = [
         subtitle={t("hero.subtitle")}
         lang={lang}
     />
+
+    <!-- About Section -->
+    <section class="py-16 md:py-24 px-6 md:px-8">
+        <div class="max-w-4xl mx-auto" data-reveal>
+            <span class="text-xs font-bold uppercase tracking-wider text-accent mb-2 block text-center">
+                {t("about.label")}
+            </span>
+            <h2 class="font-display font-bold text-3xl md:text-4xl text-neutral-900 dark:text-white text-center mb-8">
+                {t("about.title")}
+            </h2>
+            <p class="text-lg md:text-xl text-neutral-600 dark:text-neutral-400 leading-relaxed">
+                {t("about.textIntro")} <a href={getLocalizedPath('/cv', lang)} class="text-accent hover:underline font-medium">{t("about.linkCV")}</a>{t("about.textMid")} <a href={getLocalizedPath('/publications', lang)} class="text-accent hover:underline font-medium">{t("about.linkPublications")}</a>{t("about.textEnd")}
+            </p>
+        </div>
+    </section>
 
     <!-- Featured Work Section -->
     <section
