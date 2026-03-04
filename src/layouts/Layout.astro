@@ -1,5 +1,9 @@
 ---
 import '../styles/global.css';
+import '@fontsource-variable/inter';
+import '@fontsource-variable/outfit';
+import '@fontsource-variable/crimson-pro';
+import '@fontsource-variable/crimson-pro/wght-italic.css';
 import Navigation from '../components/layout/Navigation.astro';
 import { languages, defaultLang, type Lang } from '../i18n/index';
 import { getAlternateLanguagePath } from '../i18n/utils';
@@ -53,12 +57,16 @@ const alternateLinks = Object.keys(languages).map((l) => ({
         <meta property="og:url" content={canonicalURL} />
         <meta property="og:type" content={type} />
         <meta property="og:site_name" content="Jonas Wilinski" />
+        <meta property="og:locale" content={lang === 'de' ? 'de_DE' : 'en_US'} />
+        <meta property="og:locale:alternate" content={lang === 'de' ? 'en_US' : 'de_DE'} />
 
         <!-- Twitter Card -->
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={description} />
         <meta name="twitter:image" content={ogImage} />
+        <meta name="twitter:site" content="@Jonas_H_W" />
+        <meta name="twitter:creator" content="@Jonas_H_W" />
 
         <!-- Hreflang tags for SEO -->
         {alternateLinks.map(({ lang: l, href }) => (
@@ -66,15 +74,17 @@ const alternateLinks = Object.keys(languages).map((l) => ({
         ))}
         <link rel="alternate" hreflang="x-default" href={alternateLinks.find(l => l.lang === 'en')?.href} />
 
-        <!-- Preconnect to Google Fonts -->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <!-- LLM discoverability -->
+        <link rel="llms-txt" href="/llms.txt" />
 
-        <!-- Load fonts: Outfit (display), Inter (body), Crimson Pro (accent) -->
-        <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400..700;1,400..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+        <!-- RSS autodiscovery -->
+        <link rel="alternate" type="application/rss+xml" title="Jonas Wilinski Blog" href="/rss.xml" />
 
-        <!-- KaTeX for math rendering -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+        <!-- Umami Analytics -->
+        <script defer src="https://analytics.reforgelabs.com/script.js" data-website-id="50cce822-8193-43da-b244-aedbdb312ab4"></script>
+
+        <!-- Fonts: self-hosted via @fontsource (GDPR compliant) -->
+
 
         <!-- Person JSON-LD -->
         <script type="application/ld+json" set:html={JSON.stringify({
@@ -143,9 +153,12 @@ const alternateLinks = Object.keys(languages).map((l) => ({
         </script>
     </head>
     <body class="min-h-screen bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-50 font-sans antialiased">
+        <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-accent focus:text-white focus:rounded-lg focus:outline-none">
+            {lang === 'de' ? 'Zum Hauptinhalt springen' : 'Skip to main content'}
+        </a>
         <Navigation lang={lang} />
 
-        <main>
+        <main id="main-content">
             <slot />
         </main>
 

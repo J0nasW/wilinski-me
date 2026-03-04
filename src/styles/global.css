@@ -2,9 +2,9 @@
 @variant dark (&:where(.dark, .dark *));
 
 @theme {
-    --font-display: 'Outfit', system-ui, sans-serif;
-    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-    --font-serif: 'Crimson Pro', serif;
+    --font-display: 'Outfit Variable', 'Outfit', system-ui, sans-serif;
+    --font-sans: 'Inter Variable', 'Inter', system-ui, -apple-system, sans-serif;
+    --font-serif: 'Crimson Pro Variable', 'Crimson Pro', serif;
 
     /* Accent Color - Cyan/Teal */
     --color-accent-50: #ECFEFF;

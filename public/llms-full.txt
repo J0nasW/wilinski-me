@@ -75,7 +75,7 @@ Reflections on the first months of the PhD, including the development of PubCraw
 Technical deep-dive into building a hybrid infrastructure combining a local workstation with the TUHH HPC cluster for large-scale data processing and model training.
 
 ### Imagine having all of science in one place...
-*2025-02-13*
+*2026-02-13*
 Exploring the vision and technical challenges of building a comprehensive science datalake aggregating publications from multiple sources.
 
 ## Tech Stack
