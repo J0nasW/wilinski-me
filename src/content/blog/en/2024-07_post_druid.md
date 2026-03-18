@@ -3,7 +3,7 @@ title: 'DRUID 2024 and the Challenge of Explainable Semantic Networks'
 description: 'Insert Description'
 pubDate: '2024-07-20'
 heroImage: '/assets/img/title_img/IMG_6775.jpeg'
-heroImageAttribution: 'Jonas Wilinski'
+heroImageAttribution: 'custom'
 heroImageCredit: 'Jonas Wilinski'
 tags: ['conference', 'thoughts', 'science of science']
 ---
