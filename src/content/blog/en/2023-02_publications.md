@@ -9,7 +9,7 @@ heroImageLink: 'https://unsplash.com/de/fotos/wellenformige-violette-linien-auf-
 tags: ['phd', 'data engineering', 'infrastructure', 'reflection']
 ---
 
-It has been a couple of months since I started my PhD journey. In my last post, I talked about the excitement of returning to academia. Now, the reality has set in. To be honest, I am still wrestling with the specific direction of my research. "Science of Science" is huge. "Diffusion of Concepts" is fascinating but abstract. While I spend days reading papers and trying to formulate a concrete hypothesis, I often feel stuck. So, I did what any former software engineer would do when faced with existential research uncertainty: I started coding. If I don't know *exactly* what I'm looking for yet, I might as well gather *everything* so I have it ready when I do know. And so I started working on **PubCrawl**.
+It has been a couple of months since I started my PhD journey. In my last post, I talked about the excitement of returning to academia. Now, the reality has set in. I am wrestling with the specific direction of my research. "Science of Science" is huge. "Diffusion of Concepts" is fascinating but abstract. While I spend days reading papers and trying to formulate a concrete hypothesis, I often feel stuck. So, I did what any former software engineer would do when faced with existential research uncertainty: I started coding. If I don't know *exactly* what I'm looking for yet, I might as well gather *everything* so I have it ready when I do know. And so I started working on **PubCrawl**.
 
 ## The "Simple" Task of Downloading Science
 
@@ -21,17 +21,17 @@ I was working on an NLP project that required a corpus of scientific papers. Spe
 
 This sounds straightforward until you try to do it. The reality is:
 
-1. **Getting the papers is annoying.** ArXiv has an API, but it's designed for searching, not bulk downloads. The actual PDFs live in a Google Cloud bucket. To know which papers to download, you need metadata — which lives in a separate Kaggle dataset as a 4GB JSON file.
+1. **Getting the papers is annoying.** ArXiv has an API, but it's designed for searching, not bulk downloads. The actual PDFs live in a Google Cloud bucket. To know which papers to download, you need metadata — which lives in a separate [Kaggle](https://www.kaggle.com/datasets/Cornell-University/arxiv) dataset as a 4GB JSON file.
 
 2. **PDFs are terrible.** Scientific PDFs are a special kind of terrible. Two-column layouts, embedded LaTeX, figures breaking up text, headers and footers on every page, citation markers scattered everywhere. Converting a PDF to clean text is an unsolved problem dressed up as a solved one.
 
-3. **The cleaning never ends.** Even after you extract text, you get unicode ligatures, `(cid:XX)` artifacts from broken font encodings, leftover LaTeX commands, and non-English words from multilingual references. Every paper has its own special flavor of garbage.
+3. **The cleaning never ends.** Even after you extract text, you get unicode ligatures, `(cid:XX)` artifacts from broken font encodings, leftover LaTeX commands, and non-English words from multilingual references. Every paper has its own speciality.
 
-I looked for existing tools that handled this end-to-end. Some handled metadata, some handled PDF conversion, some handled text cleaning — but nothing combined them into a single pipeline. So I built one.
+I looked for existing tools that handled this end-to-end. Some handled metadata, some handled PDF conversion, some handled text cleaning — but nothing combined them into a single pipeline. So I tried to build one.
 
 ## What PubCrawl Does
 
-PubCrawl is a command-line tool that takes you from "I want papers about X" to "here's a clean JSON dataset" in one command. The pipeline works like this:
+PubCrawl was designed to be a command-line tool that handles the tedious problem of getting structured data from, lets say a specifix arXiv category. It sort of looks like this:
 
 **Metadata → PDFs → Text → Clean Text → JSON**
 
@@ -57,23 +57,13 @@ That gives you a JSON file where each line is a paper with its metadata and clea
 
 I designed PubCrawl to be extensible. The datasource abstraction means you can plug in new sources — arXiv today, PubMed and Semantic Scholar tomorrow. Each datasource handles its own download logic and outputs a standardized DataFrame that feeds into the shared processing pipeline.
 
-```
-Datasources          Pipeline              Output
-───────────         ─────────             ──────
-
-arXiv     ──┐      PDF → Text
-             ├───>  Text Cleaning  ───>  JSON
-Local PDFs ─┘      Metadata Merge
-PubMed (planned)
-```
-
 The PDF-to-text conversion runs on multiple cores using Python's `multiprocessing.Pool`. On my machine with 10 cores, it processes about 500 papers per minute. The conversion is the bottleneck — downloads from GCP are fast since `gsutil` handles parallel transfers natively.
 
 For the text extraction itself, I'm standing on the shoulders of the [arxiv-public-datasets](https://github.com/mattbierbaum/arxiv-public-datasets) project by Matt Bierbaum and others. Their `fulltext` function tries `pdftotext` first, then falls back to `pdf2txt.py`, and checks the average word length to detect garbled output. If the word length is too high (meaning words are concatenated), it retries with positional analysis. It's a clever heuristic approach and handles maybe 85% of papers correctly.
 
 ## The Text Cleaning Problem
 
-This is where I spent most of my time, and honestly, it's the part I'm least satisfied with.
+This is where I spent most of my time, and it gives me the opportunity to really learn regex and text processing.
 
 Scientific PDFs produce text that is technically correct but practically useless for NLP. Here's what a typical extracted paragraph looks like before cleaning:
 
