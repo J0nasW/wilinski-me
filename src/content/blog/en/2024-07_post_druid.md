@@ -12,7 +12,7 @@ For the past eighteen months, my focus has been largely confined to the local HP
 
 In June, I traveled to Nice, France, to present our paper, *"The AI Innovation Compass: Constructing Semantic Networks from AI Concepts to Identify and Measure Technology Innovation"*, at the DRUID 2024 conference. DRUID is a premier forum for scholars of innovation, entrepreneurship, and technical change, making it the ideal proving ground for our methodology.
 
-### **Presenting the Compass**
+### Presenting the Compass
 
 The premise of our paper addresses a critical measurement problem: AI is acting as a General Purpose Technology (GPT), but traditional bibliometrics fail to capture its nuanced integration into domains like biology or environmental science.
 
