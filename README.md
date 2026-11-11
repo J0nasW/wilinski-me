@@ -4,7 +4,7 @@ Personal portfolio website for Jonas Wilinski - Researcher, Developer & Founder.
 
 ## Tech Stack
 
-- **Framework:** [Astro 5](https://astro.build/) (Static Site Generation)
+- **Framework:** [Astro 7](https://astro.build/) (Static Site Generation)
 - **Styling:** [Tailwind CSS v4](https://tailwindcss.com/)
 - **Internationalization:** English & German (prefix-based routing)
 - **Math Rendering:** KaTeX via remark-math & rehype-katex

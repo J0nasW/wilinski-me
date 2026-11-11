@@ -28,3 +28,5 @@ Thumbs.db
 
 # Old Website dir
 old_homepage/
+# Apple Wallet signing certificates (never commit)
+.wallet/
