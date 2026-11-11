@@ -3,6 +3,7 @@ title: "The AI Innovation Compass: Constructing Semantic Networks from AI Concep
 authors: ["Jonas Wilinski"]
 venue: "DRUID Conference"
 year: 2024
+logo: "/assets/img/venues/druid.png"
 link: "https://druid.dk/"
 linkText: "Conference Website"
 pdf: "/assets/pdf/druid_paper_2024_jw.pdf"

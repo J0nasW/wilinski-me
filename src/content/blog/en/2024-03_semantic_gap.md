@@ -1,6 +1,6 @@
 ---
 title: 'The Semantic Gap: Why Keywords Fail to Capture Innovation'
-description: 'ABC'
+description: 'Fast exact matching exposed a deeper problem: keywords miss semantic drift. Why measuring AI as a general purpose technology needs embeddings and concept spaces instead of string matches.'
 pubDate: '2024-03-15'
 heroImage: '/assets/img/title_img/bg06-unsplash.jpg'
 heroImageAttribution: 'unsplash'

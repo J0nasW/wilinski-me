@@ -1,10 +1,13 @@
 ---
 title: "Attention-Based Concept Mining and Community Detection in AI Research"
-authors: ["Jonas Wilinski"]
-venue: "Academy of Management Annual Meeting"
+authors: ["Jonas Wilinski", "Juergen Christopher Thiesen", "Oliver Specht"]
+venue: "Academy of Management Proceedings"
 year: 2025
-link: "https://www.aom.org/events/annual-meeting/"
-linkText: "Conference Website"
+logo: "/assets/img/venues/aom.png"
+kind: "Poster"
+doi: "10.5465/amproc.2025.23164poster"
+link: "https://doi.org/10.5465/amproc.2025.23164poster"
+linkText: "DOI"
 pdf: "/assets/pdf/aom_poster_2025_jw.pdf"
 tldr: "This paper proposes a dual-layered framework merging attention-based concept mining with co-authorship network analysis to visualize the emergence and diffusion of AI innovations. It overcomes traditional bibliometric limitations by linking specific technical concepts to the evolution of collaborative structures within the scientific community."
 keyPoints:

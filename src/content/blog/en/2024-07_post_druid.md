@@ -1,6 +1,6 @@
 ---
 title: 'DRUID 2024 and the Challenge of Explainable Semantic Networks'
-description: 'Insert Description'
+description: 'Presenting the AI Innovation Compass at DRUID 2024 in Nice, and what the feedback from economists and innovation researchers taught me about prediction versus explanation.'
 pubDate: '2024-07-20'
 heroImage: '/assets/img/title_img/IMG_6775.jpeg'
 heroImageAttribution: 'custom'

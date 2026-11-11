@@ -1,6 +1,6 @@
 ---
 title: 'Visualizing Invention: Fine-Tuning SBERTa on the USPTO Dataset'
-description: 'Insert Description'
+description: 'Patent claims rarely say what they mean. How I used contrastive learning on CPC codes and shared citations to fine-tune a Sentence-BERT model for USPTO patents.'
 pubDate: '2024-05-10'
 heroImage: '/assets/img/title_img/bg07-unsplash.jpg'
 heroImageAttribution: 'unsplash'

@@ -1,6 +1,6 @@
 ---
-title: 'Algorithmic Bottlenecks in Python: The Case for ´SynapseTrie´'
-description: 'Searching for keywords in a corpus of 100M documents'
+title: 'Algorithmic Bottlenecks in Python: The Case for SynapseTrie'
+description: 'Matching tens of thousands of AI concepts against 100 million documents with regex never finishes. Why I wrote SynapseTrie, a prefix-tree matcher, and how much faster it got.'
 pubDate: '2023-10-28'
 heroImage: '/assets/img/title_img/bg06-unsplash.jpg'
 heroImageAttribution: 'unsplash'
