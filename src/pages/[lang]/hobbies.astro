@@ -1,0 +1,238 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Footer from '../../components/Footer.astro';
+import { cover, trips, type Photo } from '../../data/hobbies';
+import { languages, useTranslations, type Lang } from '../../i18n/index';
+
+export function getStaticPaths() {
+    return Object.keys(languages).map((lang) => ({
+        params: { lang },
+    }));
+}
+
+const { lang } = Astro.params as { lang: Lang };
+const t = useTranslations(lang);
+const img = (name: string, small = false) => `/assets/img/hobbies/${name}${small ? '-sm' : ''}.jpg`;
+
+// Splits photos into justified rows for the 72rem column: each row fills the width at
+// close to the target height, and a short last row is merged into the one before it
+function justify(photos: Photo[], width = 1152, target = 300): Photo[][] {
+    const ratio = (p: Photo) => p.width / p.height;
+    const rows: Photo[][] = [];
+    let row: Photo[] = [];
+    for (const photo of photos) {
+        row.push(photo);
+        if (row.reduce((sum, p) => sum + ratio(p), 0) * target >= width) {
+            rows.push(row);
+            row = [];
+        }
+    }
+    if (row.length) {
+        const sum = row.reduce((s, p) => s + ratio(p), 0);
+        if (rows.length && sum * target < width * 0.6) rows[rows.length - 1].push(...row);
+        else rows.push(row);
+    }
+    return rows;
+}
+---
+
+<Layout title={`${t('hobbies.title')} | Jonas Wilinski`} description={t('hobbies.description')} lang={lang}>
+    <script type="application/ld+json" set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": `https://wilinski.me/${lang}` },
+            { "@type": "ListItem", "position": 2, "name": t('hobbies.title') }
+        ]
+    })} />
+
+    <main class="pt-20 md:pt-24 pb-16">
+        <!-- Cover: one full-width photo with the title set into it -->
+        <header class="relative px-4 md:px-8">
+            <div class="relative max-w-7xl mx-auto overflow-hidden rounded-lg">
+                <img
+                    src={img(cover.name)}
+                    alt={cover.alt[lang]}
+                    width={cover.width}
+                    height={cover.height}
+                    fetchpriority="high"
+                    class="w-full h-[60vh] min-h-[22rem] max-h-[42rem] object-cover"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent"></div>
+                <div class="absolute inset-x-0 bottom-0 p-6 md:p-12">
+                    <h1 class="font-display font-semibold text-5xl md:text-7xl text-white">{t('hobbies.title')}</h1>
+                    <p class="mt-3 max-w-xl text-lg md:text-xl text-white/90">{t('hobbies.tagline')}</p>
+                </div>
+            </div>
+        </header>
+
+        <section class="px-6 md:px-8 mt-12 md:mt-16 mb-16 md:mb-24">
+            <div class="max-w-6xl mx-auto grid md:grid-cols-[1fr_18rem] gap-10 md:gap-16">
+                <p class="text-lg md:text-xl leading-relaxed text-neutral-700 dark:text-neutral-300 max-w-2xl">
+                    {t('hobbies.description')}
+                </p>
+                <nav aria-label={t('hobbies.tripsLabel')}>
+                    <h2 class="text-sm font-medium text-neutral-500 dark:text-neutral-400 mb-2">{t('hobbies.tripsLabel')}</h2>
+                    <ol class="divide-y divide-neutral-200 dark:divide-neutral-800 border-y border-neutral-200 dark:border-neutral-800">
+                        {trips.map((trip) => (
+                            <li>
+                                <a href={`#${trip.id}`} class="group flex items-baseline justify-between gap-4 py-2.5">
+                                    <span class="text-neutral-900 dark:text-white group-hover:text-accent">{trip.title[lang].split(':')[0]}</span>
+                                    <span class="text-sm text-neutral-500 tabular-nums">{trip.when}</span>
+                                </a>
+                            </li>
+                        ))}
+                    </ol>
+                </nav>
+            </div>
+        </section>
+
+        {trips.map((trip) => (
+            <section id={trip.id} class="scroll-mt-24 px-6 md:px-8 mb-24 md:mb-32">
+                <div class="max-w-6xl mx-auto">
+                    <div class="grid md:grid-cols-[8rem_1fr] gap-1 md:gap-8 mb-6 md:mb-8">
+                        <p class="font-display text-3xl md:text-4xl text-neutral-400 dark:text-neutral-500 tabular-nums md:pt-1">{trip.when}</p>
+                        <div>
+                            <h2 class="font-display font-semibold text-3xl md:text-4xl leading-tight text-neutral-900 dark:text-white">
+                                {trip.title[lang]}
+                            </h2>
+                            {trip.summary && (
+                                <p class="mt-2 max-w-2xl text-neutral-600 dark:text-neutral-400">
+                                    {trip.sailing && (
+                                        <span class="inline-block mr-2 px-2 py-0.5 rounded border border-neutral-300 dark:border-neutral-700 text-xs font-medium text-neutral-600 dark:text-neutral-300 align-[0.15em]">{t('hobbies.sailing')}</span>
+                                    )}
+                                    {trip.summary[lang]}
+                                </p>
+                            )}
+                        </div>
+                    </div>
+
+                    {trip.video && (
+                        <div class="video-facade relative aspect-video overflow-hidden rounded-lg bg-neutral-900" data-video={trip.video.id} data-title={trip.video.title}>
+                            <button type="button" class="video-play group absolute inset-0 w-full h-full cursor-pointer" aria-label={`${t('hobbies.play')}: ${trip.video.title}`}>
+                                <img
+                                    src={img(`video-${trip.video.id}`)}
+                                    alt=""
+                                    width="1280"
+                                    height="720"
+                                    loading="lazy"
+                                    decoding="async"
+                                    class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02] motion-reduce:transition-none"
+                                />
+                                <span class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></span>
+                                <span class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 grid place-items-center w-12 h-12 md:w-20 md:h-20 rounded-full bg-white/90 text-neutral-900 shadow-lg transition-transform group-hover:scale-105 motion-reduce:transition-none">
+                                    <svg class="w-5 h-5 md:w-8 md:h-8 ml-0.5 md:ml-1" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                        <path d="M8 5.14v13.72a1 1 0 0 0 1.5.86l11-6.86a1 1 0 0 0 0-1.72l-11-6.86A1 1 0 0 0 8 5.14z" />
+                                    </svg>
+                                </span>
+                                <span class="absolute left-3 right-3 bottom-2.5 md:left-6 md:right-6 md:bottom-5 text-left text-white">
+                                    <span class="block truncate text-sm md:text-lg font-medium">{trip.video.title}</span>
+                                    <span class="hidden md:block text-sm text-white/75">{t('hobbies.videoNote')}</span>
+                                </span>
+                            </button>
+                        </div>
+                    )}
+
+                    <!-- Desktop: justified rows, each as tall as its photos allow when filling the width.
+                         Mobile: the row wrappers dissolve into a two-column grid of evenly cropped tiles. -->
+                    <div class="mt-3 grid grid-cols-2 gap-2 md:flex md:flex-col md:gap-3">
+                        {justify(trip.photos).map((row) => (
+                            <div class="contents md:flex md:gap-3">
+                                {row.map((photo) => (
+                                    <button
+                                        type="button"
+                                        class:list={[
+                                            "lightbox-open relative block overflow-hidden rounded-md cursor-zoom-in bg-neutral-100 dark:bg-neutral-800 aspect-[4/3] md:aspect-[var(--ar)] md:grow-[var(--g)] md:basis-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent",
+                                            trip.photos.length % 2 === 1 && photo === justify(trip.photos).flat().at(-1) && "max-md:col-span-2 max-md:aspect-[16/9]",
+                                        ]}
+                                        style={`--ar:${photo.width}/${photo.height};--g:${(photo.width / photo.height).toFixed(3)}`}
+                                        data-full={img(photo.name)}
+                                        data-alt={photo.alt[lang]}
+                                        aria-label={photo.alt[lang]}
+                                    >
+                                        <img
+                                            src={img(photo.name, true)}
+                                            alt={photo.alt[lang]}
+                                            width={photo.width}
+                                            height={photo.height}
+                                            loading="lazy"
+                                            decoding="async"
+                                            class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 hover:scale-[1.03] motion-reduce:transition-none"
+                                        />
+                                    </button>
+                                ))}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+        ))}
+    </main>
+
+    <dialog id="lightbox" class="m-auto bg-transparent p-0 max-w-[95vw] max-h-[95vh] backdrop:bg-black/90">
+        <img id="lightbox-img" src="" alt="" class="block max-w-[95vw] max-h-[86vh] w-auto h-auto rounded" />
+        <p id="lightbox-caption" class="mt-3 text-center text-sm text-white/80"></p>
+        <button type="button" id="lightbox-prev" class="fixed left-3 top-1/2 -translate-y-1/2 w-11 h-11 grid place-items-center rounded-full bg-white/10 text-white hover:bg-white/20" aria-label={t('hobbies.previous')}>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 18l-6-6 6-6" /></svg>
+        </button>
+        <button type="button" id="lightbox-next" class="fixed right-3 top-1/2 -translate-y-1/2 w-11 h-11 grid place-items-center rounded-full bg-white/10 text-white hover:bg-white/20" aria-label={t('hobbies.next')}>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 6l6 6-6 6" /></svg>
+        </button>
+        <button type="button" id="lightbox-close" class="fixed top-4 right-4 w-11 h-11 grid place-items-center rounded-full bg-white/10 text-white hover:bg-white/20" aria-label={t('hobbies.close')}>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-width="2" d="M6 6l12 12M18 6L6 18" /></svg>
+        </button>
+    </dialog>
+
+    <Footer lang={lang} />
+</Layout>
+
+<script>
+    // Videos: a local thumbnail until clicked, so YouTube is only contacted on demand
+    function initVideos() {
+        document.querySelectorAll<HTMLElement>('.video-facade').forEach((facade) => {
+            facade.querySelector('.video-play')?.addEventListener('click', () => {
+                const iframe = document.createElement('iframe');
+                iframe.src = `https://www.youtube-nocookie.com/embed/${facade.dataset.video}?autoplay=1&rel=0`;
+                iframe.title = facade.dataset.title ?? '';
+                iframe.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+                iframe.allowFullscreen = true;
+                iframe.className = 'absolute inset-0 w-full h-full';
+                facade.replaceChildren(iframe);
+            }, { once: true });
+        });
+    }
+
+    // Photos: opens the large version; arrows and arrow keys step through all photos on the page
+    function initLightbox() {
+        const dialog = document.getElementById('lightbox') as HTMLDialogElement | null;
+        const image = document.getElementById('lightbox-img') as HTMLImageElement | null;
+        const caption = document.getElementById('lightbox-caption');
+        if (!dialog || !image || !caption) return;
+
+        const buttons = [...document.querySelectorAll<HTMLButtonElement>('.lightbox-open')];
+        let current = 0;
+
+        const show = (i: number) => {
+            current = (i + buttons.length) % buttons.length;
+            const b = buttons[current];
+            image.src = b.dataset.full ?? '';
+            image.alt = b.dataset.alt ?? '';
+            caption.textContent = b.dataset.alt ?? '';
+        };
+
+        buttons.forEach((b, i) => b.addEventListener('click', () => { show(i); dialog.showModal(); }));
+        document.getElementById('lightbox-close')?.addEventListener('click', () => dialog.close());
+        document.getElementById('lightbox-prev')?.addEventListener('click', () => show(current - 1));
+        document.getElementById('lightbox-next')?.addEventListener('click', () => show(current + 1));
+        // A click outside the image lands on the dialog itself
+        dialog.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); });
+        dialog.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') show(current + 1);
+            if (e.key === 'ArrowLeft') show(current - 1);
+        });
+        dialog.addEventListener('close', () => buttons[current]?.focus());
+    }
+
+    initVideos();
+    initLightbox();
+</script>

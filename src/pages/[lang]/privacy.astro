@@ -24,15 +24,12 @@ const t = useTranslations(lang);
         ]
     })} />
 
-    <div class="pt-24 pb-16">
+    <div class="pt-32 pb-16">
         <!-- Header -->
         <section class="px-6 md:px-8 mb-12">
             <div class="max-w-3xl mx-auto">
-                <div data-reveal>
-                    <span class="text-xs font-bold uppercase tracking-wider text-accent mb-2 block">
-                        {t('privacy.label')}
-                    </span>
-                    <h1 class="font-display font-bold text-4xl md:text-5xl text-neutral-900 dark:text-white mb-4">
+                <div>
+                    <h1 class="font-display font-semibold text-4xl md:text-5xl text-neutral-900 dark:text-white mb-4">
                         {t('privacy.title')}
                     </h1>
                     <p class="text-neutral-600 dark:text-neutral-400">
@@ -46,7 +43,7 @@ const t = useTranslations(lang);
         <section class="px-6 md:px-8">
             <div class="max-w-3xl mx-auto space-y-8">
                 <!-- Data Controller -->
-                <div class="p-8 md:p-10 rounded-3xl bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700" data-reveal>
+                <div class="p-8 md:p-10 rounded-lg bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700">
                     <div class="prose prose-neutral dark:prose-invert max-w-none
                         prose-headings:font-display prose-headings:font-bold
                         prose-h3:text-lg prose-h3:mt-0 prose-h3:mb-4
@@ -64,7 +61,7 @@ const t = useTranslations(lang);
                 </div>
 
                 <!-- Hosting -->
-                <div class="p-8 md:p-10 rounded-3xl bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700" data-reveal>
+                <div class="p-8 md:p-10 rounded-lg bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700">
                     <div class="prose prose-neutral dark:prose-invert max-w-none
                         prose-headings:font-display prose-headings:font-bold
                         prose-h3:text-lg prose-h3:mt-0 prose-h3:mb-4
@@ -76,7 +73,7 @@ const t = useTranslations(lang);
                 </div>
 
                 <!-- Analytics -->
-                <div class="p-8 md:p-10 rounded-3xl bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700" data-reveal>
+                <div class="p-8 md:p-10 rounded-lg bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700">
                     <div class="prose prose-neutral dark:prose-invert max-w-none
                         prose-headings:font-display prose-headings:font-bold
                         prose-h3:text-lg prose-h3:mt-0 prose-h3:mb-4
@@ -88,7 +85,7 @@ const t = useTranslations(lang);
                 </div>
 
                 <!-- Local Storage -->
-                <div class="p-8 md:p-10 rounded-3xl bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700" data-reveal>
+                <div class="p-8 md:p-10 rounded-lg bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700">
                     <div class="prose prose-neutral dark:prose-invert max-w-none
                         prose-headings:font-display prose-headings:font-bold
                         prose-h3:text-lg prose-h3:mt-0 prose-h3:mb-4
@@ -99,8 +96,20 @@ const t = useTranslations(lang);
                     </div>
                 </div>
 
+                <!-- YouTube videos -->
+                <div class="p-8 md:p-10 rounded-lg bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700">
+                    <div class="prose prose-neutral dark:prose-invert max-w-none
+                        prose-headings:font-display prose-headings:font-bold
+                        prose-h3:text-lg prose-h3:mt-0 prose-h3:mb-4
+                        prose-p:text-neutral-600 dark:prose-p:text-neutral-400
+                    ">
+                        <h3>{t('privacy.youtube')}</h3>
+                        <p>{t('privacy.youtubeText')}</p>
+                    </div>
+                </div>
+
                 <!-- Fonts -->
-                <div class="p-8 md:p-10 rounded-3xl bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700" data-reveal>
+                <div class="p-8 md:p-10 rounded-lg bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700">
                     <div class="prose prose-neutral dark:prose-invert max-w-none
                         prose-headings:font-display prose-headings:font-bold
                         prose-h3:text-lg prose-h3:mt-0 prose-h3:mb-4
@@ -112,7 +121,7 @@ const t = useTranslations(lang);
                 </div>
 
                 <!-- External Links -->
-                <div class="p-8 md:p-10 rounded-3xl bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700" data-reveal>
+                <div class="p-8 md:p-10 rounded-lg bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700">
                     <div class="prose prose-neutral dark:prose-invert max-w-none
                         prose-headings:font-display prose-headings:font-bold
                         prose-h3:text-lg prose-h3:mt-0 prose-h3:mb-4
@@ -124,7 +133,7 @@ const t = useTranslations(lang);
                 </div>
 
                 <!-- Contact -->
-                <div class="p-8 md:p-10 rounded-3xl bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700" data-reveal>
+                <div class="p-8 md:p-10 rounded-lg bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700">
                     <div class="prose prose-neutral dark:prose-invert max-w-none
                         prose-headings:font-display prose-headings:font-bold
                         prose-h3:text-lg prose-h3:mt-0 prose-h3:mb-4
@@ -136,7 +145,7 @@ const t = useTranslations(lang);
                 </div>
 
                 <!-- Your Rights -->
-                <div class="p-8 md:p-10 rounded-3xl bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700" data-reveal>
+                <div class="p-8 md:p-10 rounded-lg bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700">
                     <div class="prose prose-neutral dark:prose-invert max-w-none
                         prose-headings:font-display prose-headings:font-bold
                         prose-h3:text-lg prose-h3:mt-0 prose-h3:mb-4
@@ -156,7 +165,7 @@ const t = useTranslations(lang);
                 </div>
 
                 <!-- Right to Lodge a Complaint -->
-                <div class="p-8 md:p-10 rounded-3xl bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700" data-reveal>
+                <div class="p-8 md:p-10 rounded-lg bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700">
                     <div class="prose prose-neutral dark:prose-invert max-w-none
                         prose-headings:font-display prose-headings:font-bold
                         prose-h3:text-lg prose-h3:mt-0 prose-h3:mb-4
@@ -169,7 +178,7 @@ const t = useTranslations(lang);
                 </div>
 
                 <!-- Changes -->
-                <div class="p-8 md:p-10 rounded-3xl bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700" data-reveal>
+                <div class="p-8 md:p-10 rounded-lg bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700">
                     <div class="prose prose-neutral dark:prose-invert max-w-none
                         prose-headings:font-display prose-headings:font-bold
                         prose-h3:text-lg prose-h3:mt-0 prose-h3:mb-4
@@ -178,7 +187,7 @@ const t = useTranslations(lang);
                         <h3>{t('privacy.changes')}</h3>
                         <p>{t('privacy.changesText')}</p>
                         <p class="text-sm text-neutral-500 dark:text-neutral-500 italic">
-                            {t('privacy.lastUpdated')}: 04.03.2026
+                            {t('privacy.lastUpdated')}: 11.11.2026
                         </p>
                     </div>
                 </div>
