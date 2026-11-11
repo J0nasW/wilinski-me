@@ -12,26 +12,30 @@ const { currentPath, lang = defaultLang } = Astro.props;
 const t = useTranslations(lang);
 
 const navItems = [
-    { href: getLocalizedPath("/", lang), label: t("nav.home"), number: "01" },
+    { href: getLocalizedPath("/", lang), label: t("nav.home") },
     {
-        href: getLocalizedPath("/blog", lang),
-        label: t("nav.blog"),
-        number: "02",
-    },
-    {
-        href: getLocalizedPath("/publications", lang),
-        label: t("nav.research"),
-        number: "03",
+        href: getLocalizedPath("/projects", lang),
+        label: t("nav.projects")
     },
     {
         href: getLocalizedPath("/cv", lang),
-        label: t("nav.experience"),
-        number: "04",
+        label: t("nav.experience")
+    },
+    {
+        href: getLocalizedPath("/publications", lang),
+        label: t("nav.research")
+    },
+    {
+        href: getLocalizedPath("/blog", lang),
+        label: t("nav.blog")
+    },
+    {
+        href: getLocalizedPath("/hobbies", lang),
+        label: t("hobbies.title")
     },
     {
         href: getLocalizedPath("/contact", lang),
-        label: t("nav.contact"),
-        number: "05",
+        label: t("nav.contact")
     },
 ];
 
@@ -81,15 +85,9 @@ const isActive = (href: string) => {
                     ]}
                     style={`--stagger-index: ${index}`}
                 >
-                    <span class="font-mono text-sm md:text-base opacity-50 group-hover:opacity-100 transition-opacity">
-                        {item.number}
-                    </span>
-                    <span class="font-display text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight">
+                    <span class="font-display text-4xl md:text-6xl font-semibold">
                         {item.label}
                     </span>
-                    {isActive(item.href) && (
-                        <span class="hidden md:inline-block w-3 h-3 rounded-full bg-accent animate-pulse" />
-                    )}
                 </a>
             ))
         }
@@ -144,32 +142,5 @@ const isActive = (href: string) => {
             }
         </div>
 
-        <!-- Current Time -->
-        <div class="text-neutral-500 text-sm">
-            <span class="font-mono">Hamburg, Germany</span>
-            <span class="mx-2">•</span>
-            <span id="current-time" class="font-mono">--:--</span>
-        </div>
     </div>
 </div>
-
-<script>
-    const updateTime = () => {
-        const timeEl = document.getElementById("current-time");
-        if (timeEl) {
-            const now = new Date();
-            timeEl.textContent = now.toLocaleTimeString("de-DE", {
-                hour: "2-digit",
-                minute: "2-digit",
-                timeZone: "Europe/Berlin",
-            });
-        }
-    };
-
-    // Update immediately and then every minute
-    updateTime();
-    setInterval(updateTime, 60000);
-
-    // Re-run after page transitions
-    document.addEventListener("astro:page-load", updateTime);
-</script>

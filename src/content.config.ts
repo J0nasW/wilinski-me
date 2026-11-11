@@ -19,6 +19,10 @@ const blog = defineCollection({
 		tags: z.array(z.string()).optional(),
 		// Optional: Link to the translation of this post (slug without language prefix)
 		translationOf: z.string().optional(),
+		// Drafts render in `astro dev` but are left out of production builds and RSS
+		draft: z.boolean().optional(),
+		// Pins the post to the top of the blog page; otherwise the newest post is shown there
+		featured: z.boolean().optional(),
 	}),
 });
 
@@ -29,9 +33,17 @@ const publications = defineCollection({
 		authors: z.array(z.string()),
 		venue: z.string(), // Conference or Journal name
 		year: z.number(),
+		// Shown next to the venue, e.g. "Poster", "Preprint"
+		kind: z.string().optional(),
+		doi: z.string().optional(),
 		link: z.string().url().optional(),
 		linkText: z.string().optional(),
 		pdf: z.string().optional(),
+		// Further resources (code, reviews, models), shown next to PDF and DOI
+		links: z.array(z.object({ label: z.string(), url: z.string().url() })).optional(),
+		// Venue logo in /public, e.g. "/assets/img/venues/aom.png"
+		logo: z.string().optional(),
+		bibtex: z.string().optional(),
 		tldr: z.string().optional(),
 		keyPoints: z.array(z.string()).optional(),
 	}),

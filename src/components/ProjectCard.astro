@@ -1,0 +1,37 @@
+---
+import type { Project } from '../data/projects';
+import { defaultLang, useTranslations, type Lang } from '../i18n/index';
+import { projectPostUrl } from '../lib/content';
+
+interface Props {
+    project: Project;
+    lang?: Lang;
+}
+
+const { project, lang = defaultLang } = Astro.props;
+const t = useTranslations(lang);
+const postUrl = await projectPostUrl(project.post, lang);
+---
+
+<article class="py-6 sm:grid sm:grid-cols-[7.5rem_1fr] sm:gap-6">
+    <p class="mb-1 sm:mb-0 sm:pt-1 text-sm text-neutral-500 dark:text-neutral-400 tabular-nums">{project.year}</p>
+
+    <div>
+        <h3 class="font-display font-semibold text-xl md:text-2xl leading-snug text-neutral-900 dark:text-white">
+            {project.name}
+        </h3>
+        <p class="mt-2 text-neutral-700 dark:text-neutral-300 max-w-prose">{project.summary}</p>
+        {project.scale && (
+            <p class="mt-2 text-sm text-neutral-900 dark:text-white font-medium">{project.scale}</p>
+        )}
+        <p class="mt-1 text-sm text-neutral-500 dark:text-neutral-400">{project.stack.join(', ')}</p>
+        <p class="mt-3 flex flex-wrap gap-x-5 gap-y-1 text-sm">
+            {project.links.map((l) => (
+                <a href={l.url} target="_blank" rel="noopener noreferrer" class="text-accent underline underline-offset-2 hover:no-underline">{l.label}</a>
+            ))}
+            {postUrl && (
+                <a href={postUrl} class="text-accent underline underline-offset-2 hover:no-underline">{t('projects.writeup')}</a>
+            )}
+        </p>
+    </div>
+</article>

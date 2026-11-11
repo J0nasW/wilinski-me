@@ -3,19 +3,15 @@ interface Props {
     variant?: 'default' | 'accent' | 'success' | 'warning' | 'outline';
     size?: 'sm' | 'md';
     class?: string;
-    dot?: boolean;
-    pulse?: boolean;
 }
 
 const {
     variant = 'default',
     size = 'md',
     class: className = '',
-    dot = false,
-    pulse = false,
 } = Astro.props;
 
-const baseStyles = 'inline-flex items-center font-medium rounded-full transition-colors';
+const baseStyles = 'inline-flex items-center font-medium rounded';
 
 const variants = {
     default: 'bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300',
@@ -30,25 +26,9 @@ const sizes = {
     md: 'px-3 py-1 text-sm gap-1.5',
 };
 
-const dotColors = {
-    default: 'bg-neutral-500',
-    accent: 'bg-accent',
-    success: 'bg-emerald-500',
-    warning: 'bg-amber-500',
-    outline: 'bg-neutral-500',
-};
-
 const classes = `${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`;
 ---
 
 <span class={classes}>
-    {dot && (
-        <span class="relative flex h-2 w-2">
-            {pulse && (
-                <span class={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${dotColors[variant]}`}></span>
-            )}
-            <span class={`relative inline-flex rounded-full h-2 w-2 ${dotColors[variant]}`}></span>
-        </span>
-    )}
     <slot />
 </span>

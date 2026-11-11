@@ -1,7 +1,6 @@
 ---
 import '../styles/global.css';
 import '@fontsource-variable/inter';
-import '@fontsource-variable/outfit';
 import '@fontsource-variable/crimson-pro';
 import '@fontsource-variable/crimson-pro/wght-italic.css';
 import Navigation from '../components/layout/Navigation.astro';
@@ -14,14 +13,19 @@ interface Props {
     lang?: Lang;
     image?: string;
     type?: string;
+    /** Skip the site navigation (used by the QR contact card) */
+    bare?: boolean;
+    noindex?: boolean;
 }
 
 const {
     title = 'Jonas Wilinski',
-    description = 'Researcher, Developer, and Founder - Building the future with AI and modern web technologies.',
+    description = 'Jonas Wilinski, ML engineer and PhD candidate at TU Hamburg. NLP models, data infrastructure and open-source tools.',
     lang = defaultLang,
     image = '/profile.png',
     type = 'website',
+    bare = false,
+    noindex = false,
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site || Astro.url.origin).href;
@@ -41,10 +45,11 @@ const alternateLinks = Object.keys(languages).map((l) => ({
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="description" content={description} />
         <meta name="author" content="Jonas Wilinski" />
-        <meta name="theme-color" content="#06B6D4" />
+        <meta name="theme-color" content="#FFFFFF" />
         <meta name="theme-color" content="#171717" media="(prefers-color-scheme: dark)" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <meta name="generator" content={Astro.generator} />
+        {noindex && <meta name="robots" content="noindex" />}
         <title>{title}</title>
 
         <!-- Canonical URL -->
@@ -80,12 +85,13 @@ const alternateLinks = Object.keys(languages).map((l) => ({
         <!-- RSS autodiscovery -->
         <link rel="alternate" type="application/rss+xml" title="Jonas Wilinski Blog" href="/rss.xml" />
 
-        <!-- Umami Analytics -->
-        <script defer src="https://analytics.reforgelabs.com/script.js" data-website-id="50cce822-8193-43da-b244-aedbdb312ab4"></script>
-        <script defer src="https://analytics.reforgelabs.com/script.js" data-website-id="3ef70ade-e98e-4f48-94dc-1460946d7539"></script>
-
-        <!-- Fonts: self-hosted via @fontsource (GDPR compliant) -->
-
+        <!-- Umami Analytics (production only, so local previews don't count as visits) -->
+        {import.meta.env.PROD && (
+            <>
+                <script defer src="https://analytics.reforgelabs.com/script.js" data-website-id="50cce822-8193-43da-b244-aedbdb312ab4"></script>
+                <script defer src="https://analytics.reforgelabs.com/script.js" data-website-id="3ef70ade-e98e-4f48-94dc-1460946d7539"></script>
+            </>
+        )}
 
         <!-- Person JSON-LD -->
         <script type="application/ld+json" set:html={JSON.stringify({
@@ -110,12 +116,13 @@ const alternateLinks = Object.keys(languages).map((l) => ({
                     "name": "Kiel University"
                 }
             ],
-            "knowsAbout": ["Natural Language Processing", "Large Language Models", "Machine Learning", "Web Development", "Entrepreneurship", "Knowledge Graphs", "Science of Science"],
+            "knowsAbout": ["Natural Language Processing", "Large Language Models", "Machine Learning", "Information Retrieval", "Data Engineering", "Knowledge Graphs", "Science of Science"],
             "sameAs": [
                 "https://www.linkedin.com/in/jonas-wilinski-a31a35143/",
                 "https://github.com/J0nasW",
                 "https://x.com/Jonas_H_W",
                 "https://orcid.org/0009-0005-4672-7197",
+                "https://scholar.google.com/citations?user=P2kbASEAAAAJ",
                 "https://huggingface.co/J0nasW",
                 "https://bsky.app/profile/jonashw.bsky.social"
             ]
@@ -134,63 +141,19 @@ const alternateLinks = Object.keys(languages).map((l) => ({
             ]
         })} />
 
-        <!-- Theme script - runs before page renders to prevent flash -->
-        <script is:inline>
-            const theme = (() => {
-                if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
-                    return localStorage.getItem('theme');
-                }
-                if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                    return 'dark';
-                }
-                return 'light';
-            })();
-
-            if (theme === 'dark') {
-                document.documentElement.classList.add('dark');
-            } else {
-                document.documentElement.classList.remove('dark');
-            }
-        </script>
+        <!-- Theme script - runs before page renders to prevent flash. A file rather than
+             an inline script so it is covered by the CSP's 'self' source. -->
+        <script is:inline src="/theme-init.js"></script>
     </head>
     <body class="min-h-screen bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-50 font-sans antialiased">
         <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-accent focus:text-white focus:rounded-lg focus:outline-none">
             {lang === 'de' ? 'Zum Hauptinhalt springen' : 'Skip to main content'}
         </a>
-        <Navigation lang={lang} />
+        {!bare && <Navigation lang={lang} />}
 
         <main id="main-content">
             <slot />
         </main>
 
-        <!-- Scroll reveal observer -->
-        <script>
-            const initRevealObserver = () => {
-                const observer = new IntersectionObserver(
-                    (entries) => {
-                        entries.forEach((entry) => {
-                            if (entry.isIntersecting) {
-                                entry.target.classList.add('revealed');
-                                observer.unobserve(entry.target);
-                            }
-                        });
-                    },
-                    {
-                        threshold: 0.1,
-                        rootMargin: '0px 0px -50px 0px'
-                    }
-                );
-
-                document.querySelectorAll('[data-reveal]').forEach((el) => {
-                    observer.observe(el);
-                });
-            };
-
-            // Run on initial load
-            initRevealObserver();
-
-            // Re-run after Astro page transitions
-            document.addEventListener('astro:page-load', initRevealObserver);
-        </script>
     </body>
 </html>

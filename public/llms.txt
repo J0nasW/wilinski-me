@@ -1,13 +1,15 @@
 # Jonas Wilinski
 
-> PhD candidate at Hamburg University of Technology (TUHH), researching AI diffusion across the scientific landscape using NLP and Large Language Models. Developer and founder with experience in modern web technologies and cloud platforms.
+> ML engineer and PhD candidate at Hamburg University of Technology (TUHH). Builds NLP models (embedding models, LLM pipelines) and data infrastructure for scholarly data; former start-up CTO. Finishing the PhD in 2027 and looking for industry roles in applied ML, NLP and R&D.
 
 ## Pages
 
 - [Homepage](https://wilinski.me/en/)
+- [Projects](https://wilinski.me/en/projects/)
 - [Blog](https://wilinski.me/en/blog/)
 - [Publications](https://wilinski.me/en/publications/)
 - [Experience / CV](https://wilinski.me/en/cv/)
+- [CV as PDF](https://wilinski.me/jonas-wilinski-cv.pdf)
 - [Contact](https://wilinski.me/en/contact/)
 
 ## Topics
@@ -18,7 +20,8 @@
 - Knowledge Graphs & Concept Extraction
 - Machine Learning & Deep Learning
 - Web Development (React, Next.js, Astro)
-- Entrepreneurship & Startups
+- Information Retrieval & Embedding Models
+- Data Engineering (DuckDB, Parquet)
 
 ## Profiles
 

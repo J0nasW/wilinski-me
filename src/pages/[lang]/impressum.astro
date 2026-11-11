@@ -24,15 +24,12 @@ const t = useTranslations(lang);
         ]
     })} />
 
-    <main class="pt-24 pb-16">
+    <main class="pt-32 pb-16">
         <!-- Header -->
         <section class="px-6 md:px-8 mb-12">
             <div class="max-w-3xl mx-auto">
-                <div data-reveal>
-                    <span class="text-xs font-bold uppercase tracking-wider text-accent mb-2 block">
-                        {t('impressum.label')}
-                    </span>
-                    <h1 class="font-display font-bold text-4xl md:text-5xl text-neutral-900 dark:text-white mb-4">
+                <div>
+                    <h1 class="font-display font-semibold text-4xl md:text-5xl text-neutral-900 dark:text-white mb-4">
                         {t('impressum.title')}
                     </h1>
                 </div>
@@ -42,7 +39,7 @@ const t = useTranslations(lang);
         <!-- Content -->
         <section class="px-6 md:px-8">
             <div class="max-w-3xl mx-auto">
-                <div class="p-8 md:p-10 rounded-3xl bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700" data-reveal>
+                <div class="p-8 md:p-10 rounded-lg bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700">
                     <div class="prose prose-neutral dark:prose-invert max-w-none
                         prose-headings:font-display prose-headings:font-bold
                         prose-h3:text-lg prose-h3:mt-8 prose-h3:mb-4

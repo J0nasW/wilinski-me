@@ -16,6 +16,8 @@ const footerLinks = [
     { href: getLocalizedPath('/blog', lang), label: t('nav.blog') },
     { href: getLocalizedPath('/publications', lang), label: t('nav.research') },
     { href: getLocalizedPath('/cv', lang), label: 'CV' },
+    { href: getLocalizedPath('/hobbies', lang), label: t('hobbies.title') },
+    { href: getLocalizedPath('/card', lang), label: t('footer.card') },
     { href: getLocalizedPath('/contact', lang), label: t('nav.contact') },
     { href: getLocalizedPath('/impressum', lang), label: 'Impressum' },
     { href: getLocalizedPath('/privacy', lang), label: t('privacy.title') },
@@ -23,11 +25,11 @@ const footerLinks = [
 ---
 
 <footer class="border-t border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900">
-    <div class="max-w-6xl mx-auto px-6 md:px-8 py-12 md:py-16">
+    <div class="max-w-5xl mx-auto px-6 md:px-8 py-12 md:py-16">
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
             <!-- Brand Column -->
             <div class="lg:col-span-1">
-                <a href={getLocalizedPath('/', lang)} class="inline-block font-display font-bold text-2xl text-neutral-900 dark:text-white hover:text-accent transition-colors">
+                <a href={getLocalizedPath('/', lang)} class="inline-block font-display font-semibold text-2xl text-neutral-900 dark:text-white hover:text-accent transition-colors">
                     JW
                 </a>
                 <p class="mt-4 text-sm text-neutral-600 dark:text-neutral-400 max-w-xs">
@@ -37,7 +39,7 @@ const footerLinks = [
 
             <!-- Links Column -->
             <div>
-                <h4 class="font-display font-semibold text-sm uppercase tracking-wider text-neutral-500 dark:text-neutral-400 mb-4">
+                <h4 class="text-sm font-medium text-neutral-900 dark:text-white mb-4">
                     {t('footer.links')}
                 </h4>
                 <ul class="space-y-3">
@@ -45,7 +47,7 @@ const footerLinks = [
                         <li>
                             <a
                                 href={link.href}
-                                class="text-sm text-neutral-600 dark:text-neutral-400 hover:text-accent transition-colors link-underline"
+                                class="text-sm text-neutral-600 dark:text-neutral-400 hover:text-accent transition-colors"
                             >
                                 {link.label}
                             </a>
@@ -56,10 +58,10 @@ const footerLinks = [
 
             <!-- Social Column -->
             <div>
-                <h4 class="font-display font-semibold text-sm uppercase tracking-wider text-neutral-500 dark:text-neutral-400 mb-4">
+                <h4 class="text-sm font-medium text-neutral-900 dark:text-white mb-4">
                     {t('footer.connect')}
                 </h4>
-                <SocialIcons variant="circle" size="w-5 h-5" gap="gap-3" class="flex-wrap" />
+                <SocialIcons variant="inline" size="w-5 h-5" gap="gap-4" class="flex-wrap" />
             </div>
         </div>
 

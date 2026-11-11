@@ -2,7 +2,7 @@
 import ThemeToggle from '../ThemeToggle.astro';
 import FullScreenMenu from './FullScreenMenu.astro';
 import LanguageSwitcher from '../LanguageSwitcher.astro';
-import { defaultLang, type Lang } from '../../i18n/index';
+import { defaultLang, useTranslations, type Lang } from '../../i18n/index';
 import { getLocalizedPath } from '../../i18n/utils';
 
 interface Props {
@@ -11,24 +11,48 @@ interface Props {
 
 const { lang = defaultLang } = Astro.props;
 const currentPath = Astro.url.pathname;
+const t = useTranslations(lang);
+
+const links = [
+    { href: getLocalizedPath('/projects', lang), label: t('nav.projects') },
+    { href: getLocalizedPath('/cv', lang), label: t('nav.experience') },
+    { href: getLocalizedPath('/publications', lang), label: t('nav.research') },
+    { href: getLocalizedPath('/blog', lang), label: t('nav.blog') },
+    { href: getLocalizedPath('/hobbies', lang), label: t('hobbies.title') },
+    { href: getLocalizedPath('/contact', lang), label: t('nav.contact') },
+];
+const isActive = (href: string) => currentPath.startsWith(href.replace(/\/$/, ''));
 ---
 
 <!-- Fixed Top Navigation Bar -->
-<header class="fixed top-0 left-0 right-0 z-40 px-6 py-4 md:px-8 md:py-6">
-    <nav class="max-w-7xl mx-auto flex items-center justify-between">
+<header class="fixed top-0 left-0 right-0 z-40 px-6 py-4 md:px-8 md:py-5 bg-white/90 dark:bg-neutral-900/90 backdrop-blur border-b border-neutral-200/70 dark:border-neutral-800/70">
+    <nav class="max-w-5xl mx-auto flex items-center justify-between">
         <!-- Logo / Name -->
         <a
             href={getLocalizedPath('/', lang)}
             class="relative group"
         >
-            <span class="font-display font-bold text-xl md:text-2xl text-neutral-900 dark:text-white transition-colors group-hover:text-accent">
-                JW
+            <span class="font-display font-semibold text-xl text-neutral-900 dark:text-white transition-colors group-hover:text-accent">
+                Jonas Wilinski
             </span>
-            <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
         </a>
 
         <!-- Right Side Actions -->
         <div class="flex items-center gap-2 md:gap-4">
+            <ul class="hidden md:flex items-center gap-6 mr-2 text-sm">
+                {links.map((link) => (
+                    <li>
+                        <a
+                            href={link.href}
+                            class:list={[
+                                'hover:text-accent transition-colors',
+                                isActive(link.href) ? 'text-accent' : 'text-neutral-600 dark:text-neutral-300',
+                            ]}
+                            aria-current={isActive(link.href) ? 'page' : undefined}
+                        >{link.label}</a>
+                    </li>
+                ))}
+            </ul>
             <!-- Language Switcher -->
             <LanguageSwitcher lang={lang} class="hidden md:flex" />
 
@@ -38,7 +62,7 @@ const currentPath = Astro.url.pathname;
             <!-- Menu Button -->
             <button
                 id="menu-toggle"
-                class="relative z-50 flex items-center justify-center w-12 h-12 rounded-full bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors"
+                class="md:hidden relative z-50 flex items-center justify-center w-10 h-10 rounded-md bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors"
                 aria-label="Toggle menu"
                 aria-expanded="false"
             >

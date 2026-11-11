@@ -2,8 +2,8 @@
 import Layout from '../../../layouts/Layout.astro';
 import Footer from '../../../components/Footer.astro';
 import PublicationCard from '../../../components/PublicationCard.astro';
-import Badge from '../../../components/ui/Badge.astro';
-import { getCollection } from 'astro:content';
+import { getPublications } from '../../../lib/content';
+import { profile } from '../../../data/cv';
 import { languages, useTranslations, type Lang } from '../../../i18n/index';
 import { getLocalizedPath } from '../../../i18n/utils';
 
@@ -16,9 +16,7 @@ export function getStaticPaths() {
 const { lang } = Astro.params as { lang: Lang };
 const t = useTranslations(lang);
 
-const publications = (await getCollection('publications')).sort(
-    (a, b) => b.data.year - a.data.year
-);
+const publications = await getPublications();
 
 // Group publications by year
 const publicationsByYear = publications.reduce((acc, pub) => {
@@ -29,6 +27,10 @@ const publicationsByYear = publications.reduce((acc, pub) => {
     acc[year].push(pub);
     return acc;
 }, {} as Record<number, typeof publications>);
+
+// Where the papers, code and models also live; citation profiles first
+const order = ['ORCID', 'Google Scholar', 'Semantic Scholar', 'GitHub', 'Hugging Face'];
+const profiles = order.flatMap((label) => profile.links.filter((l) => l.label === label));
 
 const years = Object.keys(publicationsByYear).sort((a, b) => Number(b) - Number(a));
 ---
@@ -44,15 +46,12 @@ const years = Object.keys(publicationsByYear).sort((a, b) => Number(b) - Number(
         ]
     })} />
 
-    <main class="pt-24 pb-16">
+    <main class="pt-32 pb-16">
         <!-- Header -->
         <section class="px-6 md:px-8 mb-12 md:mb-16">
             <div class="max-w-4xl mx-auto">
-                <div data-reveal>
-                    <span class="text-xs font-bold uppercase tracking-wider text-accent mb-2 block">
-                        {t('publications.label')}
-                    </span>
-                    <h1 class="font-display font-bold text-4xl md:text-5xl lg:text-6xl text-neutral-900 dark:text-white mb-4">
+                <div>
+                    <h1 class="font-display font-semibold text-4xl md:text-5xl lg:text-6xl text-neutral-900 dark:text-white mb-4">
                         {t('publications.title')}
                     </h1>
                     <p class="text-lg text-neutral-600 dark:text-neutral-400 max-w-2xl">
@@ -61,9 +60,9 @@ const years = Object.keys(publicationsByYear).sort((a, b) => Number(b) - Number(
                 </div>
 
                 <!-- Stats -->
-                <div class="flex items-center gap-6 mt-8" data-reveal>
+                <div class="flex items-center gap-6 mt-8">
                     <div class="flex items-center gap-2">
-                        <span class="font-display font-bold text-2xl text-neutral-900 dark:text-white">
+                        <span class="font-display font-semibold text-2xl text-neutral-900 dark:text-white">
                             {publications.length}
                         </span>
                         <span class="text-sm text-neutral-500 dark:text-neutral-400">
@@ -72,7 +71,7 @@ const years = Object.keys(publicationsByYear).sort((a, b) => Number(b) - Number(
                     </div>
                     <div class="w-px h-6 bg-neutral-200 dark:bg-neutral-700"></div>
                     <div class="flex items-center gap-2">
-                        <span class="font-display font-bold text-2xl text-neutral-900 dark:text-white">
+                        <span class="font-display font-semibold text-2xl text-neutral-900 dark:text-white">
                             {years.length}
                         </span>
                         <span class="text-sm text-neutral-500 dark:text-neutral-400">
@@ -80,6 +79,15 @@ const years = Object.keys(publicationsByYear).sort((a, b) => Number(b) - Number(
                         </span>
                     </div>
                 </div>
+
+                <p class="mt-6 text-sm text-neutral-500 dark:text-neutral-400">
+                    {t('publications.profiles')}{' '}
+                    {profiles.map((l, i) => (
+                        <>
+                            <a href={l.url} target="_blank" rel="noopener noreferrer" class="text-neutral-800 dark:text-neutral-200 underline decoration-neutral-300 dark:decoration-neutral-600 underline-offset-4 hover:decoration-accent">{l.label}</a>{i < profiles.length - 1 ? ', ' : ''}
+                        </>
+                    ))}
+                </p>
             </div>
         </section>
 
@@ -87,19 +95,15 @@ const years = Object.keys(publicationsByYear).sort((a, b) => Number(b) - Number(
         <section class="px-6 md:px-8">
             <div class="max-w-4xl mx-auto">
                 {years.map((year, yearIndex) => (
-                    <div class="mb-12" data-reveal style={`--stagger-index: ${yearIndex}`}>
+                    <div class="mb-12" style={`--stagger-index: ${yearIndex}`}>
                         <!-- Year Header -->
-                        <div class="sticky top-20 z-10 py-4 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-lg -mx-6 px-6 mb-6 border-b border-neutral-200 dark:border-neutral-800">
-                            <h2 class="font-display font-bold text-xl text-neutral-900 dark:text-white">
-                                {year}
-                            </h2>
-                        </div>
+                        <h2 class="font-display text-2xl text-neutral-400 dark:text-neutral-500 border-b border-neutral-200 dark:border-neutral-800 pb-2">{year}</h2>
 
                         <!-- Publications for this year -->
-                        <div class="space-y-6">
+                        <div class="divide-y divide-neutral-200 dark:divide-neutral-800">
                             {publicationsByYear[Number(year)].map((publication, index) => (
-                                <div data-reveal style={`--stagger-index: ${index}`}>
-                                    <PublicationCard {...publication.data} slug={publication.id} lang={lang} />
+                                <div style={`--stagger-index: ${index}`}>
+                                    <PublicationCard publication={publication} lang={lang} />
                                 </div>
                             ))}
                         </div>
@@ -119,8 +123,8 @@ const years = Object.keys(publicationsByYear).sort((a, b) => Number(b) - Number(
         <!-- CTA -->
         <section class="px-6 md:px-8 mt-16">
             <div class="max-w-4xl mx-auto">
-                <div class="p-8 md:p-12 rounded-3xl bg-neutral-100 dark:bg-neutral-800/50 text-center" data-reveal>
-                    <h3 class="font-display font-bold text-2xl text-neutral-900 dark:text-white mb-4">
+                <div class="p-8 md:p-12 rounded-lg bg-neutral-100 dark:bg-neutral-800/50 text-center">
+                    <h3 class="font-display font-semibold text-2xl text-neutral-900 dark:text-white mb-4">
                         {t('publications.collaboration')}
                     </h3>
                     <p class="text-neutral-600 dark:text-neutral-400 mb-6 max-w-lg mx-auto">

@@ -4,7 +4,7 @@
 <button
     type="button"
     aria-label="Toggle dark mode"
-    class="theme-toggle-btn group relative flex items-center justify-center h-10 w-10 md:h-12 md:w-12 rounded-full bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+    class="theme-toggle-btn group relative flex items-center justify-center h-10 w-10 rounded-md hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
 >
     <span class="sr-only">Toggle dark mode</span>
 
@@ -41,29 +41,32 @@
     </svg>
 </button>
 
-<script is:inline>
+<script>
     (() => {
         const getTheme = () => {
-            if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
-                return localStorage.getItem('theme');
-            }
+            try {
+                const stored = localStorage.getItem('theme');
+                if (stored) return stored;
+            } catch {}
             if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
                 return 'dark';
             }
             return 'light';
         };
 
-        const setTheme = (theme) => {
+        const setTheme = (theme: string, persist = true) => {
             if (theme === 'dark') {
                 document.documentElement.classList.add('dark');
             } else {
                 document.documentElement.classList.remove('dark');
             }
-            localStorage.setItem('theme', theme);
+            if (persist) {
+                try { localStorage.setItem('theme', theme); } catch {}
+            }
         };
 
-        // Apply on load
-        setTheme(getTheme());
+        // Apply on load without persisting, so the OS setting keeps working until the user picks one
+        setTheme(getTheme(), false);
 
         // Setup click listeners
         const setupListeners = () => {

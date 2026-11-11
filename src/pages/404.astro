@@ -1,0 +1,18 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Page not found | Jonas Wilinski" lang="en" noindex>
+    <main class="pt-40 pb-24 px-6 md:px-8">
+        <div class="max-w-5xl mx-auto">
+            <h1 class="font-display font-semibold text-5xl md:text-6xl text-neutral-900 dark:text-white mb-4">Page not found</h1>
+            <p class="text-lg text-neutral-600 dark:text-neutral-400 max-w-xl">
+                This page doesn't exist or has moved. Try the <a href="/en/blog/" class="text-accent underline underline-offset-2">blog</a>,
+                the <a href="/en/publications/" class="text-accent underline underline-offset-2">publications</a>
+                or the <a href="/en/" class="text-accent underline underline-offset-2">home page</a>.
+            </p>
+        </div>
+    </main>
+    <Footer lang="en" />
+</Layout>
